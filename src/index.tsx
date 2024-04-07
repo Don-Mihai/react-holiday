@@ -1,7 +1,10 @@
+import 'reset-css';
+import './style.scss';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
+import Auth from './pages/Auth';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 
@@ -9,6 +12,10 @@ const routes = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
+  },
+  {
+    path: '/auth',
+    element: <Auth />,
   },
 ]);
 

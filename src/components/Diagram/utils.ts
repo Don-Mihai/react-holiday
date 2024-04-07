@@ -12,7 +12,8 @@ export function createDiagram(diagramRef: any, nodes: any, links: any) {
     { locationSpot: go.Spot.Center },
     new go.Binding('location', 'loc', go.Point.parse),
     $(go.Shape, { figure: 'Circle', fill: 'white' }, new go.Binding('fill', 'color')),
-    $(go.Picture, { width: 34, height: 34, source: 'cat.png' }, new go.Binding('source', 'text'))
+    // $(go.TextBlock, { width: 34, height: 34, source: 'cat.png' }, new go.Binding('text', 'text'))
+    $(go.TextBlock, { font: 'bold 11pt sans-serif' }, new go.Binding('text'))
   );
 
   myDiagram.linkTemplate = $(

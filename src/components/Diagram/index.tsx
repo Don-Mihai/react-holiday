@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 // @ts-ignore
-import * as go from 'gojs';
 import { RootState } from '../../redux/store';
 import { createDiagram } from './utils';
 
