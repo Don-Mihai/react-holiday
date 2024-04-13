@@ -6,20 +6,20 @@ interface Props {
   handleClick: () => void;
 }
 
+const initialState = {
+  login: '',
+  password: '',
+};
+
 const Login = ({ handleClick }: Props) => {
-  const [loginVal, setLoginVal] = useState('');
-  const [passwordVal, setPasswordVal] = useState('');
-  const [loginErrorFlag, setLoginErrorFlag] = useState(false);
-  const [passwordErrorFlag, setPasswordErrorFlag] = useState(false);
-  const [loginErrorText, setLoginErrorText] = useState('');
-  const [passwordErrorText, setPasswordErrorText] = useState('');
+  const [formValues, setFormValues] = useState(initialState);
+  const [errorsText, setErrorsText] = useState(initialState);
 
-  const changeLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginVal(event.target.value);
-  };
-
-  const changePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordVal(event.target.value);
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues({
+      ...formValues,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const clickConfirm = () => {
@@ -27,32 +27,30 @@ const Login = ({ handleClick }: Props) => {
     validatePassword();
   };
 
+  const clearError = (key: string) => {
+    setErrorsText((prev) => ({ ...prev, [key]: '' }));
+  };
+
   const validatePassword = () => {
-    setPasswordErrorFlag(false);
-    setPasswordErrorText('');
-    if (passwordVal.length <= 0) {
-      setPasswordErrorFlag(true);
-      setPasswordErrorText('Пустой пароль!');
+    clearError('password');
+    if (formValues.password.length <= 0) {
+      setErrorsText((prev) => ({ ...prev, password: 'Пустой пароль!' }));
       return;
     }
-    if (passwordVal.length <= 8) {
-      setPasswordErrorFlag(true);
-      setPasswordErrorText('Длина пароля должна быть не менее 8 символов!');
+    if (formValues.password.length <= 8) {
+      setErrorsText((prev) => ({ ...prev, password: 'Длина пароля должна быть не менее 8 символов!' }));
       return;
     }
   };
 
   const validateLogin = () => {
-    setLoginErrorFlag(false);
-    setLoginErrorText('');
-    if (loginVal.length <= 0) {
-      setLoginErrorFlag(true);
-      setLoginErrorText('Пустой логин!');
+    clearError('login');
+    if (formValues.login.length <= 0) {
+      setErrorsText((prev) => ({ ...prev, login: 'Пустой логин!' }));
       return;
     }
-    if (!validateEmail(loginVal)) {
-      setLoginErrorFlag(true);
-      setLoginErrorText('Логин должен быть в формате *@*.* !');
+    if (!validateEmail(formValues.login)) {
+      setErrorsText((prev) => ({ ...prev, login: 'Логин должен быть в формате *@*.* !' }));
       return;
     }
   };
@@ -62,12 +60,35 @@ const Login = ({ handleClick }: Props) => {
     return re.test(email);
   }
 
+  console.log(errorsText);
   return (
     <>
       <h2 className="auth__title">Авторизация</h2>
       <div className="auth__block">
-        <TextField onChange={changeLogin} label="Почта" variant="outlined" fullWidth helperText={loginErrorText} error={loginErrorFlag} />
-        <TextField onChange={changePassword} label="Пароль" variant="outlined" fullWidth helperText={passwordErrorText} error={passwordErrorFlag} />
+        <TextField
+          onChange={onChange}
+          name="login"
+          label="Почта"
+          value={formValues.login}
+          variant="outlined"
+          fullWidth
+          helperText={errorsText.login}
+          error={Boolean(errorsText.login)}
+          onFocus={() => clearError('login')}
+          onBlur={() => validateLogin()}
+        />
+        <TextField
+          onChange={onChange}
+          name="password"
+          label="Пароль"
+          value={formValues.password}
+          variant="outlined"
+          fullWidth
+          helperText={errorsText.password}
+          error={Boolean(errorsText.password)}
+          onFocus={() => clearError('password')}
+          onBlur={() => validatePassword()}
+        />
         <Button onClick={clickConfirm} variant="outlined" size="medium">
           Подтвердить
         </Button>
