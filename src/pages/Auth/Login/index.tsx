@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Login = ({ handleClick }: Props) => {
-  const [loginVal, setLoginVal] = useState('');
+  const [loginVal, setLoginVals] = useState('');
   const [passwordVal, setPasswordVal] = useState('');
   const [loginErrorFlag, setLoginErrorFlag] = useState(false);
   const [passwordErrorFlag, setPasswordErrorFlag] = useState(false);
@@ -15,7 +15,7 @@ const Login = ({ handleClick }: Props) => {
   const [passwordErrorText, setPasswordErrorText] = useState('');
 
   const changeLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginVal(event.target.value);
+    setLoginVals(event.target.value);
   };
 
   const changePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
