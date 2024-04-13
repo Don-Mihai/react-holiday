@@ -3,27 +3,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   nodes: [
-    { key: 1, text: 'HTML', color: 'lightyellow', loc: '0 0' },
-    { key: 2, text: 'CSS', color: 'brown', loc: '200 0' },
-    { key: 3, text: 'JavaScript', color: 'green', loc: '400 0' },
-    { key: 4, text: 'Responsive Design', color: 'slateblue', loc: '600 0' },
-    { key: 5, text: 'Version Control/Git', color: 'aquamarine', loc: '0 200' },
-    { key: 6, text: 'React', color: 'tomato', loc: '200 200' },
-    { key: 7, text: 'State Management (e.g., Redux)', color: 'goldenrod', loc: '400 200' },
-    { key: 8, text: 'Testing (e.g., Jest)', color: 'orange', loc: '600 200' },
-    { key: 9, text: 'Build Tools (e.g., Webpack)', color: 'pink', loc: '200 400' },
-    { key: 10, text: 'Accessibility', color: 'lightblue', loc: '400 400' },
+    { id: '1', type: 'input', data: { label: 'Узел 1', icon: '/cat.png', completed: false }, position: { x: 250, y: 5 } },
+    { id: '2', data: { label: 'Узел 2', icon: '/cat.png', completed: false }, position: { x: 100, y: 100 } },
+    // Добавьте здесь больше узлов по необходимости
   ],
-  links: [
-    { from: 1, to: 2, color: 'blue' },
-    { from: 2, to: 3, color: 'blue' },
-    { from: 3, to: 4, color: 'blue' },
-    { from: 1, to: 5, color: 'red' },
-    { from: 3, to: 6, color: 'red' },
-    { from: 6, to: 7, color: 'red' },
-    { from: 3, to: 8, color: 'red' },
-    { from: 2, to: 9, color: 'green' },
-    { from: 2, to: 10, color: 'green' },
+  edges: [
+    { id: 'e1-2', source: '1', target: '2' },
+    // Добавьте здесь больше рёбер по необходимости
   ],
 };
 
@@ -34,16 +20,38 @@ export const diagramSlice = createSlice({
     addNode: (state, action) => {
       state.nodes.push(action.payload);
     },
-    addLink: (state, action) => {
-      state.links.push(action.payload);
+    addEdge: (state, action) => {
+      state.edges.push(action.payload);
     },
-    initializeDiagram: (state, action) => {
-      state.nodes = action.payload.nodes;
-      state.links = action.payload.links;
+    toggleNodeStatus: (state, action) => {
+      const node = state.nodes.find((node) => node.id === action.payload);
+      if (node) {
+        node.data = {
+          ...node.data,
+          completed: !node.data.completed,
+        };
+      }
     },
+    updateNodes(state, action: PayloadAction<any[]>) {
+      // Простое обновление, например, для изменения положения узлов
+      action.payload.forEach((update) => {
+        const node = state.nodes.find((n) => n.id === update.id);
+        if (node) {
+          // В этом примере обновляем только положение узла, но вы можете расширить логику по необходимости
+          node.position = update.position;
+        }
+      });
+    },
+    // Обновление рёбер
+    updateEdges(state, action: PayloadAction<any[]>) {
+      // Пример обновления может включать добавление нового ребра или удаление существующего
+      // Здесь приведен пример добавления ребра
+      state.edges = [...state.edges, ...action.payload];
+    },
+    // Добавьте другие редьюсеры по мере необходимости
   },
 });
 
-export const { addNode, addLink, initializeDiagram } = diagramSlice.actions;
+export const { addNode, addEdge, toggleNodeStatus, updateEdges, updateNodes } = diagramSlice.actions;
 
 export default diagramSlice.reducer;
