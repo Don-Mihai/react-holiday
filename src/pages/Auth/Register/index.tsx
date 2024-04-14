@@ -4,6 +4,7 @@ import { validate, validateEmail, validatePassword } from '../utils';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../../utils';
 
 interface Props {
   handleClick: () => void;
@@ -39,7 +40,7 @@ const Register = ({ handleClick }: Props) => {
     setErrorsText(newErrors);
 
     if (validate(newErrors)) {
-      const user = (await axios.post('http://localhost:3001/users', formValues)).data;
+      const user = (await axios.post(`${BASE_URL}/users`, formValues)).data;
 
       localStorage.setItem('userId', user.id);
 

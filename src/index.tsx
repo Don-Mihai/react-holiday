@@ -8,10 +8,12 @@ import Auth from './pages/Auth';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 
+const isAuth = Boolean(localStorage.getItem('userId'));
+
 const routes = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: isAuth ? <Home /> : <Auth />,
   },
   {
     path: '/auth',

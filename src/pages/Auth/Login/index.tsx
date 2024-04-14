@@ -1,7 +1,10 @@
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-import { validatePassword, validateEmail } from '../utils';
+import { validatePassword, validateEmail, validate } from '../utils';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { BASE_URL } from '../../../utils';
 
 interface Props {
   handleClick: () => void;
@@ -16,6 +19,8 @@ const Login = ({ handleClick }: Props) => {
   const [formValues, setFormValues] = useState(initialState);
   const [errorsText, setErrorsText] = useState(initialState);
 
+  const navigate = useNavigate();
+
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({
       ...formValues,
@@ -23,12 +28,23 @@ const Login = ({ handleClick }: Props) => {
     });
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     const newErrors = {
       login: validateEmail(formValues.login),
       password: validatePassword(formValues.password),
     };
     setErrorsText(newErrors);
+
+    if (validate(newErrors)) {
+      const user = (await axios.get(`${BASE_URL}/users?email=${formValues.login}&password=${formValues.password}`)).data?.[0];
+      if (user?.id) {
+        localStorage.setItem('userId', user.id);
+
+        navigate('/');
+      } else {
+        alert('Неправильный логин или пароль');
+      }
+    }
   };
 
   const clearError = (key: string) => {

@@ -4,6 +4,11 @@
       "id": "0bdd",
       "email": "admin@admin.ru",
       "password": "00000000"
+    },
+    {
+      "id": "1",
+      "email": "злоумышник",
+      "password": "00000000"
     }
   ]
 }

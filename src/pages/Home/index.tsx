@@ -3,6 +3,7 @@ import DiagramFlow from '../../components/DiagramFLow';
 import { useEffect, useState } from 'react';
 import { User } from '../../redux/User/type';
 import Header from '../../components/Header';
+import { BASE_URL } from '../../utils';
 
 const Home = () => {
   const [user, setUser] = useState<null | User>(null);
@@ -12,7 +13,7 @@ const Home = () => {
 
   const getUser = async () => {
     const userId = localStorage.getItem('userId');
-    const user = (await axios.get(`http://localhost:3001/users/${userId}`)).data;
+    const user = (await axios.get(`${BASE_URL}/users/${userId}`)).data;
     setUser(user);
   };
 
