@@ -1,3 +1,9 @@
 {
-  "users": []
+  "users": [
+    {
+      "id": "f5ae",
+      "email": "admin@admin.ru",
+      "password": "00000000"
+    }
+  ]
 }

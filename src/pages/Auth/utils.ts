@@ -2,7 +2,7 @@ export const validatePassword = (value: string = '') => {
   if (value.length <= 0) {
     return 'Пустой пароль!';
   }
-  if (value.length <= 8) {
+  if (value.length < 8) {
     return 'Длина пароля должна быть не менее 8 символов!';
   }
   return '';

@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { validate, validateEmail, validatePassword } from '../utils';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
 
 interface Props {
   handleClick: () => void;
@@ -29,12 +30,13 @@ const Register = ({ handleClick }: Props) => {
 
   const handleConfirm = () => {
     const newErrors = {
-      login: validateEmail(formValues.login),
+      email: validateEmail(formValues.email),
       password: validatePassword(formValues.password),
     };
     setErrorsText(newErrors);
 
     if (validate(newErrors)) {
+      axios.post('http://localhost:3001/users', formValues);
     }
   };
 
@@ -45,7 +47,7 @@ const Register = ({ handleClick }: Props) => {
   const handleBlur = (event: any) => {
     setErrorsText((prev) => ({
       ...prev,
-      [event.target.name]: 'login' ? validateEmail(formValues.login) : validatePassword(formValues.password),
+      [event.target.name]: 'email' ? validateEmail(formValues.email) : validatePassword(formValues.password),
     }));
   };
 
@@ -55,14 +57,14 @@ const Register = ({ handleClick }: Props) => {
       <div className="auth__block">
         <TextField
           onChange={onChange}
-          name="login"
+          name="email"
           label="Почта"
-          value={formValues.login}
+          value={formValues.email}
           variant="outlined"
           fullWidth
-          helperText={errorsText.login}
-          error={Boolean(errorsText.login)}
-          onFocus={() => clearError('login')}
+          helperText={errorsText.email}
+          error={Boolean(errorsText.email)}
+          onFocus={() => clearError('email')}
           onBlur={handleBlur}
         />
         <TextField
