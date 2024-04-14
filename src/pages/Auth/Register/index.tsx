@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { validate, validateEmail, validatePassword } from '../utils';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   handleClick: () => void;
@@ -21,6 +22,8 @@ const Register = ({ handleClick }: Props) => {
   const [formValues, setFormValues] = useState(initialState);
   const [errorsText, setErrorsText] = useState(initialState);
 
+  const navigate = useNavigate();
+
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({
       ...formValues,
@@ -28,7 +31,7 @@ const Register = ({ handleClick }: Props) => {
     });
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     const newErrors = {
       email: validateEmail(formValues.email),
       password: validatePassword(formValues.password),
@@ -36,7 +39,11 @@ const Register = ({ handleClick }: Props) => {
     setErrorsText(newErrors);
 
     if (validate(newErrors)) {
-      axios.post('http://localhost:3001/users', formValues);
+      const user = (await axios.post('http://localhost:3001/users', formValues)).data;
+
+      localStorage.setItem('userId', user.id);
+
+      navigate('/');
     }
   };
 
