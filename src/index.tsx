@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Auth from './pages/Auth';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
+import Profile from './pages/Profile';
 
 const isAuth = Boolean(localStorage.getItem('userId'));
 
@@ -18,6 +19,10 @@ const routes = createBrowserRouter([
   {
     path: '/auth',
     element: <Auth />,
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
   },
 ]);
 
