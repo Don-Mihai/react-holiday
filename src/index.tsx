@@ -5,6 +5,9 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
 import Auth from './pages/Auth';
+import About from './pages/About';
+import Contacts from './pages/Contacts';
+import Profile from './pages/Profile';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 
@@ -18,6 +21,18 @@ const routes = createBrowserRouter([
   {
     path: '/auth',
     element: <Auth />,
+  },
+  {
+    path: '/about',
+    element: <About />,
+  },
+  {
+    path: '/contacts',
+    element: <Contacts />,
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
   },
 ]);
 
