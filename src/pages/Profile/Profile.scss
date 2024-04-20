@@ -1,7 +1,5 @@
 .profile {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
   height: 100%;
 
@@ -10,6 +8,7 @@
   }
 
   &__block {
+    margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
