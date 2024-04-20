@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import Processes from './pages/Processes';
+import Process from './pages/Process';
 
 const isAuth = Boolean(localStorage.getItem('userId'));
 
@@ -38,6 +39,10 @@ const routes = createBrowserRouter([
   {
     path: '/processes',
     element: <Processes />,
+  },
+  {
+    path: '/processes/:id',
+    element: <Process />,
   },
   {
     path: '*',
