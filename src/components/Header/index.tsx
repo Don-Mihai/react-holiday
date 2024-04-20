@@ -50,6 +50,9 @@ function ResponsiveAppBar() {
     navigate('/auth');
   };
 
+  //todo: клик по навигации срабатывает только на второй раз
+  //todo: переделать на дивы
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
