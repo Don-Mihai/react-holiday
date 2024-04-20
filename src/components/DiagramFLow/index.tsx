@@ -1,6 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import ReactFlow, { MiniMap, Controls, Background, useNodesState, useEdgesState, Position, Handle, addEdge } from 'react-flow-renderer';
-import { Tooltip } from '@mui/material';
+import { Button, Drawer, TextField, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ImageUploadIcon from '@mui/icons-material/CloudUpload';
 
 const nodeTypes = {
   special: ({ data }: any) => (
@@ -16,9 +18,25 @@ const nodeTypes = {
 };
 
 const TreeComponent = () => {
-  // Инициализация локального состояния узлов и рёбер. Если нужно, здесь можно загрузить начальное состояние.
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [taskStatus, setTaskStatus] = React.useState('incomplete');
+  const [description, setDescription] = React.useState('');
+
+  const handleStatusChange = (event: any, newStatus: any) => {
+    if (newStatus !== null) {
+      setTaskStatus(newStatus);
+    }
+  };
+
+  const handleDescriptionChange = (event: any) => {
+    setDescription(event.target.value);
+  };
+
+  const handleUploadClick = () => {
+    // Trigger file input click or handle file upload
+  };
 
   const toggleNodeStatus = useCallback(
     (nodeId: any) => {
@@ -30,9 +48,9 @@ const TreeComponent = () => {
 
   const onNodeClick = useCallback(
     (event: any, node: any) => {
-      toggleNodeStatus(node.id);
+      setIsDrawerOpen(true);
     },
-    [toggleNodeStatus]
+    [setIsDrawerOpen]
   );
 
   const handlePaneClick = useCallback(
@@ -55,8 +73,12 @@ const TreeComponent = () => {
 
   const onConnect = useCallback((params: any) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
+  const toggleDrawer = () => {
+    setIsDrawerOpen((prev) => !prev);
+  };
+
   return (
-    <div style={{ height: 800 }}>
+    <div style={{ height: 400 }}>
       <ReactFlow
         nodes={nodes.map((node) => ({
           ...node,
@@ -72,10 +94,39 @@ const TreeComponent = () => {
         nodeTypes={nodeTypes}
         // fitView
       >
-        <MiniMap />
-        <Controls />
+        {/* <MiniMap /> */}
+        {/* <Controls /> */}
         <Background />
       </ReactFlow>
+      <Drawer anchor={'right'} open={isDrawerOpen} onClose={toggleDrawer}>
+        <div className="sidebar__container" style={{ width: '400px', padding: '20px' }}>
+          <ToggleButtonGroup color="primary" value={taskStatus} exclusive onChange={handleStatusChange} fullWidth style={{ marginBottom: '20px' }}>
+            <ToggleButton value="incomplete">Незавершенная</ToggleButton>
+            <ToggleButton value="complete" color="success">
+              Завершенная
+            </ToggleButton>
+          </ToggleButtonGroup>
+
+          <TextField
+            label="Описание задачи"
+            multiline
+            rows={4}
+            value={description}
+            onChange={handleDescriptionChange}
+            variant="outlined"
+            fullWidth
+            style={{ marginBottom: '20px' }}
+          />
+
+          <Button variant="contained" component="label" startIcon={<ImageUploadIcon />} style={{ marginBottom: '20px' }}>
+            Загрузить иконку
+          </Button>
+
+          <Button variant="outlined" color="error" startIcon={<DeleteIcon />} style={{ marginTop: '20px' }}>
+            Удалить задачу
+          </Button>
+        </div>
+      </Drawer>
     </div>
   );
 };
