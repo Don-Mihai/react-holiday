@@ -10,6 +10,7 @@ import Contacts from './pages/Contacts';
 import Profile from './pages/Profile';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
+import Processes from './pages/Processes';
 
 const isAuth = Boolean(localStorage.getItem('userId'));
 
@@ -33,6 +34,14 @@ const routes = createBrowserRouter([
   {
     path: '/profile',
     element: <Profile />,
+  },
+  {
+    path: '/processes',
+    element: <Processes />,
+  },
+  {
+    path: '*',
+    element: <div>404</div>,
   },
 ]);
 

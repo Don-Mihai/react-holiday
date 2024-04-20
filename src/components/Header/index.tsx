@@ -18,6 +18,7 @@ const pages = [
   { title: 'Главная', path: '/' },
   { title: 'О нас', path: '/about' },
   { title: 'Контакты', path: '/contacts' },
+  { title: 'Процессы', path: '/processes' },
 ];
 const settings = [
   { title: 'Профиль', path: '/profile' },
