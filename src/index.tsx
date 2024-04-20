@@ -10,6 +10,7 @@ import Contacts from './pages/Contacts';
 import Profile from './pages/Profile';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
+import Profile from './pages/Profile';
 
 const isAuth = Boolean(localStorage.getItem('userId'));
 
