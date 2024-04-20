@@ -2,18 +2,15 @@ import { TextField, TextFieldProps } from '@mui/material';
 import './TextInputLabelTop.scss';
 import { useState } from 'react';
 
-const initialState = {
-  login: '',
-  password: '',
-};
+interface Props {}
 
-const TextInputLabelTop = (props: TextFieldProps) => {
+const TextInputLabelTop = ({ name, label, ...rest }: TextFieldProps) => {
   return (
     <div className="box">
-      <label className="label" htmlFor={props.id}>
-        {props.label}
+      <label className="label" htmlFor={name}>
+        {label}
       </label>
-      <TextField {...props} label="" />
+      <TextField id={name} name={name} {...rest} label="" />
     </div>
   );
 };
