@@ -26,9 +26,10 @@ export const processSlice = createSlice({
         state.processes.push(action.payload);
       })
       .addCase(remove.fulfilled, (state, action) => {
-        state.processes.filter((p) => {
+        const newArr = state.processes.filter((p) => {
           return p.id != action.payload.id;
         });
+        state.processes = newArr;
       });
   },
 });
