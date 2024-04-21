@@ -5,30 +5,25 @@ import { useEffect, useState } from 'react';
 import './Processes.scss';
 import axios from 'axios';
 import { BASE_URL } from '../../utils';
+import { PProcessPost } from '../../redux/Process/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
+import { get } from '../../redux/Process';
 
 const Processes = () => {
-  const [processes, setProcesses] = useState<Process[]>([]);
+  const { processes, isLoading } = useSelector((state: RootState) => state.Process);
+
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    getProcesses();
+    dispatch(get());
   }, []);
-
-  const getProcesses = async () => {
-    const response = await axios.get(BASE_URL + 'processes');
-    setProcesses(response.data);
-  };
 
   const handleDelete = (id: number) => {
     console.log(id);
   };
 
-  const handleAdd = async () => {
-    const payload = { title: 'Новый процесс', description: 'Описание процесса' };
-
-    const process: Process = (await axios.post(BASE_URL + 'processes', payload)).data;
-
-    setProcesses([...processes, process]);
-  };
+  const handleAdd = async () => {};
 
   const handleEdit = (id: number) => {
     console.log(id);

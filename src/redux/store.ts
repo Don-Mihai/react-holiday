@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import User from './User';
 import Diagram from './Diagram';
+import Process from './Process';
 
 export const store = configureStore({
   reducer: {
     User,
     Diagram,
+    Process,
   },
 });
 
