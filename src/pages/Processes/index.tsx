@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import './Processes.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
-import { get, post } from '../../redux/Process';
+import { get, post, remove } from '../../redux/Process';
 import { PProcessPost } from '../../redux/Process/types';
 
 const Processes = () => {
@@ -17,8 +17,8 @@ const Processes = () => {
     dispatch(get());
   }, []);
 
-  const handleDelete = (id: number) => {
-    console.log(id);
+  const handleDelete = (id: string) => {
+    dispatch(remove(id));
   };
 
   const handleAdd = async () => {
@@ -30,7 +30,7 @@ const Processes = () => {
     dispatch(post(payload));
   };
 
-  const handleEdit = (id: number) => {
+  const handleEdit = (id: String) => {
     console.log(id);
   };
   return (
