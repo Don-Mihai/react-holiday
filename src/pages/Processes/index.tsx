@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 import './Processes.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
-import { get } from '../../redux/Process';
+import { get, post } from '../../redux/Process';
+import { PProcessPost } from '../../redux/Process/types';
 
 const Processes = () => {
   const { processes, isLoading } = useSelector((state: RootState) => state.Process);
@@ -20,7 +21,14 @@ const Processes = () => {
     console.log(id);
   };
 
-  const handleAdd = async () => {};
+  const handleAdd = async () => {
+    const payload: PProcessPost = {
+      title: 'Новый процесс',
+      description: 'Описание нового процесса',
+    };
+
+    dispatch(post(payload));
+  };
 
   const handleEdit = (id: number) => {
     console.log(id);
