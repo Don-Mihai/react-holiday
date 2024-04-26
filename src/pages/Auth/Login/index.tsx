@@ -36,7 +36,7 @@ const Login = ({ handleClick }: Props) => {
     setErrorsText(newErrors);
 
     if (validate(newErrors)) {
-      const user = (await axios.get(`${BASE_URL}/users?email=${formValues.login}&password=${formValues.password}`)).data?.[0];
+      const user = (await axios.get(`${BASE_URL}users?email=${formValues.login}&password=${formValues.password}`)).data?.[0];
       if (user?.id) {
         localStorage.setItem('userId', user.id);
 

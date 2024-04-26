@@ -30,6 +30,13 @@ export const processSlice = createSlice({
           return p.id != action.payload.id;
         });
         state.processes = newArr;
+      })
+      .addCase(update.fulfilled, (state, action) => {
+        const updatedProcess = action.payload;
+        const index = state.processes.findIndex((p) => p.id === updatedProcess.id);
+        if (index !== -1) {
+          state.processes[index] = updatedProcess;
+        }
       });
   },
 });
@@ -53,4 +60,9 @@ export const post = createAsyncThunk('process/post', async (payload: PProcessPos
 export const remove = createAsyncThunk('process/delete', async (id: string): Promise<Process> => {
   const process = (await axios.delete(BASE_URL + 'processes/' + id)).data;
   return process;
+});
+
+export const update = createAsyncThunk('process/update', async (updatedProcess: Process): Promise<Process> => {
+  const response = await axios.put(BASE_URL + 'processes/' + updatedProcess.id, updatedProcess);
+  return response.data;
 });
