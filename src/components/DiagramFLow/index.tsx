@@ -1,8 +1,10 @@
-import React, { useCallback, useState } from 'react';
-import ReactFlow, { MiniMap, Controls, Background, useNodesState, useEdgesState, Position, Handle, addEdge } from 'react-flow-renderer';
+import React, { useCallback, useEffect, useState } from 'react';
+import ReactFlow, { Background, useNodesState, useEdgesState, Position, Handle, addEdge } from 'react-flow-renderer';
 import { Button, Drawer, TextField, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ImageUploadIcon from '@mui/icons-material/CloudUpload';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 const nodeTypes = {
   special: ({ data }: any) => (
@@ -20,38 +22,19 @@ const nodeTypes = {
 const TreeComponent = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [taskStatus, setTaskStatus] = React.useState('incomplete');
-  const [description, setDescription] = React.useState('');
+  const [currentNode, setCurrentNode] = React.useState<any>({});
 
-  const handleStatusChange = (event: any, newStatus: any) => {
-    if (newStatus !== null) {
-      setTaskStatus(newStatus);
-    }
-  };
+  const { nodes: diagramNodes, edges: diagramEdges } = useSelector((state: RootState) => state.Diagram);
 
-  const handleDescriptionChange = (event: any) => {
-    setDescription(event.target.value);
-  };
+  useEffect(() => {
+    setNodes(diagramNodes);
+    setEdges(diagramEdges);
+  }, [diagramNodes, diagramEdges]);
 
-  const handleUploadClick = () => {
-    // Trigger file input click or handle file upload
-  };
-
-  const toggleNodeStatus = useCallback(
-    (nodeId: any) => {
-      console.log(nodeId);
-      setNodes((nds) => nds.map((node) => (node.id === nodeId ? { ...node, data: { ...node.data, completed: !node.data.completed } } : node)));
-    },
-    [setNodes]
-  );
-
-  const onNodeClick = useCallback(
-    (event: any, node: any) => {
-      setIsDrawerOpen(true);
-    },
-    [setIsDrawerOpen]
-  );
+  const onNodeClick = useCallback((event: any, node: any) => {
+    console.log(node);
+    setCurrentNode(node);
+  }, []);
 
   const handlePaneClick = useCallback(
     (event: any) => {
@@ -73,9 +56,49 @@ const TreeComponent = () => {
 
   const onConnect = useCallback((params: any) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
-  const toggleDrawer = () => {
-    setIsDrawerOpen((prev) => !prev);
+  const closeAside = () => {
+    setCurrentNode({});
   };
+
+  const handleStatusChange = (event: any, newStatus: any) => {
+    setCurrentNode((prevNode: any) => ({
+      ...prevNode,
+      data: {
+        ...prevNode.data,
+        completed: newStatus,
+      },
+    }));
+
+    // Обновить состояние nodes, чтобы отразить изменения в currentNode
+    setNodes((prevNodes) =>
+      prevNodes.map((node) => {
+        if (node.id === currentNode.id) {
+          return { ...node, completed: newStatus };
+        }
+        return node;
+      })
+    );
+  };
+
+  const handleDescriptionChange = (event: any) => {
+    const { value } = event.target;
+    setCurrentNode((prevNode: any) => ({
+      ...prevNode,
+      description: value,
+    }));
+
+    // Обновить состояние nodes, чтобы отразить изменения в currentNode
+    setNodes((prevNodes) =>
+      prevNodes.map((node) => {
+        if (node.id === currentNode.id) {
+          return { ...node, description: value };
+        }
+        return node;
+      })
+    );
+  };
+
+  console.log(currentNode);
 
   return (
     <div style={{ height: 400 }}>
@@ -92,17 +115,22 @@ const TreeComponent = () => {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
-        // fitView
+        fitView
       >
-        {/* <MiniMap /> */}
-        {/* <Controls /> */}
         <Background />
       </ReactFlow>
-      <Drawer anchor={'right'} open={isDrawerOpen} onClose={toggleDrawer}>
+      <Drawer anchor={'right'} open={currentNode.id} onClose={closeAside}>
         <div className="sidebar__container" style={{ width: '400px', padding: '20px' }}>
-          <ToggleButtonGroup color="primary" value={taskStatus} exclusive onChange={handleStatusChange} fullWidth style={{ marginBottom: '20px' }}>
-            <ToggleButton value="incomplete">Незавершенная</ToggleButton>
-            <ToggleButton value="complete" color="success">
+          <ToggleButtonGroup
+            color="primary"
+            value={currentNode?.data?.completed}
+            exclusive
+            onChange={handleStatusChange}
+            fullWidth
+            style={{ marginBottom: '20px' }}
+          >
+            <ToggleButton value={false}>Незавершенная</ToggleButton>
+            <ToggleButton value={true} color="success">
               Завершенная
             </ToggleButton>
           </ToggleButtonGroup>
@@ -111,7 +139,7 @@ const TreeComponent = () => {
             label="Описание задачи"
             multiline
             rows={4}
-            value={description}
+            value={currentNode.description}
             onChange={handleDescriptionChange}
             variant="outlined"
             fullWidth
