@@ -13,7 +13,7 @@ const Home = () => {
 
   const getUser = async () => {
     const userId = localStorage.getItem('userId');
-    const user = (await axios.get(`${BASE_URL}/users/${userId}`)).data;
+    const user = (await axios.get(`${BASE_URL}users/${userId}`)).data;
     setUser(user);
   };
 
