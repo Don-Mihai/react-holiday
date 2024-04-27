@@ -6,6 +6,8 @@ import { PStepPost } from '../../redux/Step/types';
 import { AppDispatch, RootState } from '../../redux/store';
 import { get, post } from '../../redux/Step';
 import { useEffect } from 'react';
+import Step from '../../components/Step';
+import { remove } from '../../redux/Process';
 
 const Process = () => {
   const steps = useSelector((state: RootState) => state.Step.steps);
@@ -26,14 +28,16 @@ const Process = () => {
     dispatch(post(payload));
   };
 
+  const handleDelete = (id: string) => {
+    dispatch(remove(id));
+  };
+
   return (
     <>
       <Header />
       <div className={`process`}>{params.id}</div>
       {steps.map((step) => (
-        <div key={step.id}>
-          {step.title} - {step.description}
-        </div>
+        <Step onDelete={handleDelete} step={step} key={step.id} />
       ))}
       <Button onClick={handleAdd} className="processes__add-button" variant="contained">
         Добавить
