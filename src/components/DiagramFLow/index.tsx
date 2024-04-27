@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ImageUploadIcon from '@mui/icons-material/CloudUpload';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import Sidebar from '../Sidebar';
 
 const nodeTypes = {
   special: ({ data }: any) => (
@@ -60,12 +61,12 @@ const TreeComponent = () => {
     setCurrentNode({});
   };
 
-  const handleStatusChange = (event: any, newStatus: any) => {
+  const handleChange = (field: string, newValue: any) => {
     setCurrentNode((prevNode: any) => ({
       ...prevNode,
       data: {
         ...prevNode.data,
-        completed: newStatus,
+        [field]: newValue,
       },
     }));
 
@@ -73,32 +74,12 @@ const TreeComponent = () => {
     setNodes((prevNodes) =>
       prevNodes.map((node) => {
         if (node.id === currentNode.id) {
-          return { ...node, completed: newStatus };
+          return { ...node, data: { ...node.data, [field]: newValue } };
         }
         return node;
       })
     );
   };
-
-  const handleDescriptionChange = (event: any) => {
-    const { value } = event.target;
-    setCurrentNode((prevNode: any) => ({
-      ...prevNode,
-      description: value,
-    }));
-
-    // Обновить состояние nodes, чтобы отразить изменения в currentNode
-    setNodes((prevNodes) =>
-      prevNodes.map((node) => {
-        if (node.id === currentNode.id) {
-          return { ...node, description: value };
-        }
-        return node;
-      })
-    );
-  };
-
-  console.log(currentNode);
 
   return (
     <div style={{ height: 400 }}>
@@ -119,42 +100,13 @@ const TreeComponent = () => {
       >
         <Background />
       </ReactFlow>
-      <Drawer anchor={'right'} open={currentNode.id} onClose={closeAside}>
-        <div className="sidebar__container" style={{ width: '400px', padding: '20px' }}>
-          <ToggleButtonGroup
-            color="primary"
-            value={currentNode?.data?.completed}
-            exclusive
-            onChange={handleStatusChange}
-            fullWidth
-            style={{ marginBottom: '20px' }}
-          >
-            <ToggleButton value={false}>Незавершенная</ToggleButton>
-            <ToggleButton value={true} color="success">
-              Завершенная
-            </ToggleButton>
-          </ToggleButtonGroup>
-
-          <TextField
-            label="Описание задачи"
-            multiline
-            rows={4}
-            value={currentNode.description}
-            onChange={handleDescriptionChange}
-            variant="outlined"
-            fullWidth
-            style={{ marginBottom: '20px' }}
-          />
-
-          <Button variant="contained" component="label" startIcon={<ImageUploadIcon />} style={{ marginBottom: '20px' }}>
-            Загрузить иконку
-          </Button>
-
-          <Button variant="outlined" color="error" startIcon={<DeleteIcon />} style={{ marginTop: '20px' }}>
-            Удалить задачу
-          </Button>
-        </div>
-      </Drawer>
+      <Sidebar
+        open={Boolean(currentNode.id)}
+        handleClose={closeAside}
+        onChange={handleChange}
+        description={currentNode.data?.description}
+        completed={currentNode.data?.completed}
+      />
     </div>
   );
 };
