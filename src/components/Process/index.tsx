@@ -8,6 +8,9 @@ import ImageUploadIcon from '@mui/icons-material/CloudUpload';
 import './style.scss';
 import { useNavigate } from 'react-router-dom';
 import { update } from '../../redux/Process';
+import { AppDispatch } from '../../redux/store';
+import { post } from '../../redux/Step';
+import { PStepPost } from '../../redux/Step/types';
 
 interface Process {
   id: string;
@@ -23,7 +26,8 @@ interface Props {
 const Process = ({ process, onDelete }: Props) => {
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [editedTitle, setEditedTitle] = useState(process.title);
   const [editedDescription, setEditedDescription] = useState(process.description);
@@ -36,11 +40,10 @@ const Process = ({ process, onDelete }: Props) => {
     setEditedDescription(event.target.value);
   };
 
-  const handleSaveChanges = () => {
+  const handleSaveChanges = async () => {
     const updatedProcess = { ...process, title: editedTitle, description: editedDescription };
-    console.log(update);
-    dispatch(update(updatedProcess));
-    toggleDrawer();
+    await dispatch(update(updatedProcess));
+    closeSidebar();
   };
 
   const handleDelete = (event: any) => {
@@ -51,22 +54,19 @@ const Process = ({ process, onDelete }: Props) => {
   const handleDeleteChanges = (event: any) => {
     event.stopPropagation();
     onDelete(process.id);
-    toggleDrawer();
+    closeSidebar();
   };
 
-  const toggleDrawer = () => {
-    setIsDrawerOpen((prev) => !prev);
+  const closeSidebar = () => {
+    setIsDrawerOpen(false);
   };
 
-  const onNodeClick = useCallback(
-    (event: any) => {
-      setIsDrawerOpen(true);
-    },
-    [setIsDrawerOpen]
-  );
+  const onNodeClick = (event: any) => {
+    setIsDrawerOpen(true);
+  };
 
   return (
-    <div className="process" onClick={onNodeClick}>
+    <div className="process" onClick={() => navigate(`/processes/${process.id}`)}>
       <h3 className="process__title">{process.title}</h3>
       <p className="process__description">{process.description}</p>
       <div className="process__actions">
@@ -74,7 +74,8 @@ const Process = ({ process, onDelete }: Props) => {
           <DeleteIcon />
         </IconButton>
       </div>
-      <Drawer anchor={'right'} open={isDrawerOpen} onClose={toggleDrawer}>
+
+      <Drawer anchor={'right'} open={isDrawerOpen} onClose={closeSidebar}>
         <div className="sidebar__container" style={{ width: '400px', padding: '20px' }}>
           <TextField
             label={'Название задачи'}

@@ -33,6 +33,7 @@ const Processes = () => {
   const handleEdit = (id: String) => {
     console.log(id);
   };
+
   return (
     <div className="processes">
       <Header />
