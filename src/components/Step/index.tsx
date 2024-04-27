@@ -11,20 +11,15 @@ import { update } from '../../redux/Process';
 import { AppDispatch } from '../../redux/store';
 import { post } from '../../redux/Step';
 import { PStepPost } from '../../redux/Step/types';
-
-interface Step {
-  id: string;
-  title: string;
-  description: string;
-  imgUrl?: string;
-}
+import { Step as IStep } from '../../redux/Step/types';
 
 interface Props {
-  step: Step;
+  step: IStep;
   onDelete: (id: string) => void;
+  onClick: (step: IStep) => void;
 }
 
-const Step = ({ step, onDelete }: Props) => {
+const Step = ({ step, onDelete, onClick }: Props) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
@@ -39,8 +34,12 @@ const Step = ({ step, onDelete }: Props) => {
     onDelete(step.id);
   };
 
+  const handleClick = (e: any) => {
+    onClick(step);
+  };
+
   return (
-    <div className="step">
+    <div className="step" onClick={handleClick}>
       <Avatar alt="Step" src={step.imgUrl} />
       <h3 className="step__title">{step.title}</h3>
       <p className="step__description">{step.description}</p>
