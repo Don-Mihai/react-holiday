@@ -20,6 +20,7 @@ const Process = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [currentStep, setCurrentStep] = useState<IStep>({} as IStep);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     getProcess();
@@ -54,8 +55,12 @@ const Process = () => {
     setCurrentStep({} as IStep);
   };
 
-  const handleEdit = (step: IStep) => {
-    dispatch(update(process));
+  const handleEdit = (field: string, newValue: any) => {
+    const payload = {
+      ...process,
+      [field]: newValue,
+    };
+    dispatch(update(payload));
   };
 
   return (
@@ -65,6 +70,9 @@ const Process = () => {
       {steps.map((step) => (
         <Step onClick={handleClick} onDelete={handleDelete} step={step} key={step.id} />
       ))}
+
+      <Sidebar open={open} description={process.description} handleClose={handleClosetStep} onChange={handleEdit} completed={false} />
+
       <Sidebar open={Boolean(currentStep?.id)} description={currentStep.description} handleClose={handleClosetStep} onChange={() => {}} completed={false} />
       <Button onClick={handleAdd} className="processes__add-button" variant="contained">
         Добавить
