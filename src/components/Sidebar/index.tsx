@@ -52,6 +52,16 @@ const Sidebar = ({ classNames, open, handleClose, completed, onChange, descripti
         <Button variant="outlined" color="error" startIcon={<DeleteIcon />} style={{ marginTop: '20px' }}>
           Удалить задачу
         </Button>
+
+        <div className="component-sidebar__bottom-buttons">
+          <Button variant="contained" component="label" style={{ width: '150px' }}>
+            Сохранить
+          </Button>
+
+          <Button variant="outlined" color="error" style={{ width: '150px' }}>
+            Отменить
+          </Button>
+        </div>
       </div>
     </Drawer>
   );
