@@ -9,8 +9,9 @@ import { useEffect, useState } from 'react';
 import Step from '../../components/Step';
 import Sidebar from '../../components/Sidebar';
 import { Step as IStep } from '../../redux/Step/types';
-import { getProcessById } from '../../redux/Process';
+import { getProcessById, update } from '../../redux/Process';
 import { Process as IProcess } from '../../redux/Process/types';
+import EditIcon from '@mui/icons-material/Edit';
 
 const Process = () => {
   const steps = useSelector((state: RootState) => state.Step.steps);
@@ -53,7 +54,9 @@ const Process = () => {
     setCurrentStep({} as IStep);
   };
 
-  const handleEdit = (step: IStep) => {};
+  const handleEdit = (step: IStep) => {
+    dispatch(update(process));
+  };
 
   return (
     <>
