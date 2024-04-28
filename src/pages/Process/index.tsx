@@ -78,7 +78,15 @@ const Process = () => {
       {steps.map((step) => (
         <Step onClick={handleClick} onDelete={handleDelete} step={step} key={step.id} />
       ))}
-      <Sidebar open={open} description={process.description} handleClose={() => setOpen(false)} onChange={handleChangeProcess} completed={false} />
+      {/* все инпуты передать через children */}
+      <Sidebar
+        open={open}
+        description={process.description}
+        handleClose={() => setOpen(false)}
+        onChange={handleChangeProcess}
+        completed={false}
+        handleSave={handleSave}
+      />
       <Sidebar open={Boolean(currentStep?.id)} description={currentStep.description} handleClose={handleClosetStep} onChange={() => {}} completed={false} />
       <Button onClick={handleAdd} className="page-process__add-button" variant="contained">
         Добавить

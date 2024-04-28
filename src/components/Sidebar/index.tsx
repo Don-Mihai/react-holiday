@@ -8,6 +8,7 @@ import ImageUploadIcon from '@mui/icons-material/CloudUpload';
 import './style.scss';
 
 interface Props {
+  handleSave?: () => void;
   classNames?: string[];
   open: boolean;
   handleClose: () => void;
@@ -16,7 +17,7 @@ interface Props {
   description: string;
 }
 
-const Sidebar = ({ classNames, open, handleClose, completed, onChange, description }: Props) => {
+const Sidebar = ({ classNames, open, handleClose, completed, onChange, description, handleSave }: Props) => {
   return (
     <Drawer anchor={'right'} className="component-sidebar" open={open} onClose={handleClose}>
       <div className="component-sidebar__container">
@@ -54,7 +55,7 @@ const Sidebar = ({ classNames, open, handleClose, completed, onChange, descripti
         </Button>
 
         <div className="component-sidebar__bottom-buttons">
-          <Button variant="contained" component="label" style={{ width: '150px' }}>
+          <Button variant="contained" component="label" style={{ width: '150px' }} onClick={handleSave}>
             Сохранить
           </Button>
 
