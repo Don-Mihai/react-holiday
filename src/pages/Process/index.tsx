@@ -10,9 +10,13 @@ import Step from '../../components/Step';
 import Sidebar from '../../components/Sidebar';
 import { Step as IStep } from '../../redux/Step/types';
 import { getProcessById, update } from '../../redux/Process';
+import { update as stepUpdate } from '../../redux/Step';
 import { Process as IProcess } from '../../redux/Process/types';
 import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import './style.scss';
 
 const Process = () => {
@@ -40,6 +44,7 @@ const Process = () => {
       title: 'Новый шаг',
       description: 'Описание нового шага',
       processId: params.id || '',
+      completed: false,
     };
 
     dispatch(post(payload));
@@ -61,9 +66,19 @@ const Process = () => {
     dispatch(update(process));
   };
 
-  const handleChangeProcess = (field: string, newValue: any) => {
-    setProcess({ ...process, [field]: newValue.target.value });
+  const handleChangeProcess = (e: any) => {
+    setProcess({ ...process, [e.target.name]: e.target.value });
   };
+
+  const handleSaveStep = () => {
+    dispatch(stepUpdate(currentStep));
+  };
+
+  const handleChangeStep = (e: any) => {
+    setCurrentStep({ ...currentStep, completed: e.target.value === 'true' ? true : false });
+  };
+
+  console.log(currentStep);
 
   return (
     <div className="page-process">
@@ -79,15 +94,28 @@ const Process = () => {
         <Step onClick={handleClick} onDelete={handleDelete} step={step} key={step.id} />
       ))}
       {/* все инпуты передать через children */}
-      <Sidebar
-        open={open}
-        description={process.description}
-        handleClose={() => setOpen(false)}
-        onChange={handleChangeProcess}
-        completed={false}
-        handleSave={handleSave}
-      />
-      <Sidebar open={Boolean(currentStep?.id)} description={currentStep.description} handleClose={handleClosetStep} onChange={() => {}} completed={false} />
+      <Sidebar open={open} handleClose={() => setOpen(false)} handleSave={handleSave}>
+        <TextField
+          label="Описание"
+          multiline
+          rows={4}
+          value={process.description}
+          name="description"
+          onChange={handleChangeProcess}
+          variant="outlined"
+          fullWidth
+          style={{ marginBottom: '20px' }}
+        />
+      </Sidebar>
+
+      <Sidebar open={Boolean(currentStep?.id)} handleClose={handleClosetStep} handleSave={handleSaveStep}>
+        <ToggleButtonGroup color="primary" value={currentStep.completed} exclusive onChange={handleChangeStep} fullWidth style={{ marginBottom: '20px' }}>
+          <ToggleButton value={false}>Незавершенная</ToggleButton>
+          <ToggleButton value={true} color="success">
+            Завершенная
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Sidebar>
       <Button onClick={handleAdd} className="page-process__add-button" variant="contained">
         Добавить
       </Button>

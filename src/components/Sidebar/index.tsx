@@ -1,66 +1,43 @@
 import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
-import TextField from '@mui/material/TextField';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ImageUploadIcon from '@mui/icons-material/CloudUpload';
 import './style.scss';
+import { useState } from 'react';
+import TextField from '@mui/material/TextField';
 
 interface Props {
   handleSave?: () => void;
   classNames?: string[];
   open: boolean;
   handleClose: () => void;
-  completed: boolean;
-  onChange: (field: string, newValue: any) => void;
-  description: string;
+  children: React.ReactNode;
 }
 
-const Sidebar = ({ classNames, open, handleClose, completed, onChange, description, handleSave }: Props) => {
+const Sidebar = ({ classNames, open, handleClose, handleSave, children }: Props) => {
+  const [openUrl, setOpenUrl] = useState(false);
+  const handleUploadIconClick = () => {
+    setOpenUrl(true);
+  };
+
   return (
     <Drawer anchor={'right'} className="component-sidebar" open={open} onClose={handleClose}>
       <div className="component-sidebar__container">
-        <ToggleButtonGroup
-          color="primary"
-          value={completed}
-          exclusive
-          onChange={(e: any) => onChange('completed', e)}
-          fullWidth
-          style={{ marginBottom: '20px' }}
-        >
-          <ToggleButton value={false}>Незавершенная</ToggleButton>
-          <ToggleButton value={true} color="success">
-            Завершенная
-          </ToggleButton>
-        </ToggleButtonGroup>
-
-        <TextField
-          label="Описание"
-          multiline
-          rows={4}
-          value={description}
-          onChange={(e: any) => onChange('description', e)}
-          variant="outlined"
-          fullWidth
-          style={{ marginBottom: '20px' }}
-        />
-
-        <Button variant="contained" component="label" startIcon={<ImageUploadIcon />} style={{ marginBottom: '20px' }}>
+        {children}
+        <Button onClick={handleUploadIconClick} variant="contained" component="label" startIcon={<ImageUploadIcon />} style={{ marginBottom: '20px' }}>
           Загрузить иконку
         </Button>
-
-        <Button variant="outlined" color="error" startIcon={<DeleteIcon />} style={{ marginTop: '20px' }}>
-          Удалить задачу
-        </Button>
+        {openUrl ? <TextField label="Путь к иконке" variant="outlined" /> : ''}
 
         <div className="component-sidebar__bottom-buttons">
-          <Button variant="contained" component="label" style={{ width: '150px' }} onClick={handleSave}>
+          <Button variant="contained" component="label" onClick={handleSave}>
             Сохранить
           </Button>
 
-          <Button variant="outlined" color="error" style={{ width: '150px' }}>
-            Отменить
+          <Button variant="outlined">Отменить</Button>
+
+          <Button variant="outlined" color="error" startIcon={<DeleteIcon />}>
+            Удалить
           </Button>
         </div>
       </div>

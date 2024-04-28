@@ -15,7 +15,7 @@
     {
       "id": "cdc8",
       "title": "Новый процесс",
-      "description": "Описание нового процессааааf"
+      "description": "Описание нового"
     },
     {
       "id": "e307",
@@ -30,16 +30,11 @@
   ],
   "steps": [
     {
-      "id": "a3a7",
-      "title": "Новый шаг",
-      "description": "Описание нового шага",
-      "processId": "cdc8"
-    },
-    {
       "id": "6166",
       "title": "Новый шаг",
       "description": "Описание нового шага",
-      "processId": "cdc8"
+      "processId": "cdc8",
+      "completed": false
     },
     {
       "id": "d745",
