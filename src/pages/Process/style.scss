@@ -5,4 +5,10 @@
     justify-content: space-between;
     align-items: center;
   }
+  & &__add-button {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
