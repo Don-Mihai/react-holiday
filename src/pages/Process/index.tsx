@@ -12,6 +12,8 @@ import { Step as IStep } from '../../redux/Step/types';
 import { getProcessById, update } from '../../redux/Process';
 import { Process as IProcess } from '../../redux/Process/types';
 import EditIcon from '@mui/icons-material/Edit';
+import { IconButton } from '@mui/material';
+import './style.scss';
 
 const Process = () => {
   const steps = useSelector((state: RootState) => state.Step.steps);
@@ -64,20 +66,24 @@ const Process = () => {
   };
 
   return (
-    <>
+    <div className="page-process">
       <Header />
-      <div className={`process`}>{process.title}</div>
+      <div className="page-process__header">
+        <div className="page-process__title">{process.title}</div>
+        <IconButton onClick={() => setOpen(true)}>
+          <EditIcon />
+        </IconButton>
+      </div>
+
       {steps.map((step) => (
         <Step onClick={handleClick} onDelete={handleDelete} step={step} key={step.id} />
       ))}
-
-      <Sidebar open={open} description={process.description} handleClose={handleClosetStep} onChange={handleEdit} completed={false} />
-
+      <Sidebar open={open} description={process.description} handleClose={() => setOpen(false)} onChange={handleEdit} completed={false} />
       <Sidebar open={Boolean(currentStep?.id)} description={currentStep.description} handleClose={handleClosetStep} onChange={() => {}} completed={false} />
-      <Button onClick={handleAdd} className="processes__add-button" variant="contained">
+      <Button onClick={handleAdd} className="page-process__add-button" variant="contained">
         Добавить
       </Button>
-    </>
+    </div>
   );
 };
 
