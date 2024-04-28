@@ -57,7 +57,7 @@ const Process = () => {
     setCurrentStep({} as IStep);
   };
 
-  const handleSave = (field: string, newValue: any) => {
+  const handleSave = () => {
     dispatch(update(process));
   };
 
