@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const initialState: InitialState = {
   processes: [],
+  currentProc: {} as Process,
   isLoading: false,
 };
 
@@ -47,6 +48,12 @@ export default processSlice.reducer;
 
 export const get = createAsyncThunk('process/get', async (): Promise<Process[]> => {
   const process = (await axios.get(BASE_URL + 'processes')).data;
+
+  return process;
+});
+
+export const getProcessById = createAsyncThunk('process/getProcessById', async (processId: string | undefined): Promise<Process> => {
+  const process = processId ? (await axios.get(BASE_URL + `processes/${processId}`)).data : ({} as Process);
 
   return process;
 });

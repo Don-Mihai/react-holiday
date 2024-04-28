@@ -9,17 +9,27 @@ import { useEffect, useState } from 'react';
 import Step from '../../components/Step';
 import Sidebar from '../../components/Sidebar';
 import { Step as IStep } from '../../redux/Step/types';
+import { getProcessById } from '../../redux/Process';
+import { Process as IProcess } from '../../redux/Process/types';
 
 const Process = () => {
   const steps = useSelector((state: RootState) => state.Step.steps);
+  const [process, setProcess] = useState<IProcess>({} as IProcess);
   const params = useParams();
   const dispatch = useDispatch<AppDispatch>();
 
   const [currentStep, setCurrentStep] = useState<IStep>({} as IStep);
 
   useEffect(() => {
+    getProcess();
     dispatch(get(params.id));
   }, []);
+
+  const getProcess = async () => {
+    const process = await dispatch(getProcessById(params.id)).unwrap();
+
+    setProcess(process);
+  };
 
   const handleAdd = async () => {
     const payload: PStepPost = {
@@ -48,7 +58,7 @@ const Process = () => {
   return (
     <>
       <Header />
-      <div className={`process`}>{params.id}</div>
+      <div className={`process`}>{process.title}</div>
       {steps.map((step) => (
         <Step onClick={handleClick} onDelete={handleDelete} step={step} key={step.id} />
       ))}
