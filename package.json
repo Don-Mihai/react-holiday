@@ -31,7 +31,13 @@
     "prepare": "husky",
     "server": "json-server --watch db.json --port 3001"
   },
-  "proxy": "http://localhost:3001/",
+  "options": {
+    "allowedHosts": [
+      "localhost",
+      ".localhost"
+    ],
+    "proxy": "https://localhost:3001/"
+  },
   "lint-staged": {
     "**/*.{js,jsx,tsx,ts,less,scss,md,json}": [
       "prettier --write",
