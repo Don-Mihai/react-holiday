@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { memo } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -51,7 +51,6 @@ function ResponsiveAppBar() {
     navigate('/auth');
   };
 
-  //todo: клик по навигации срабатывает только на второй раз
   //todo: переделать на дивы
 
   return (
@@ -174,4 +173,4 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
-export default ResponsiveAppBar;
+export default memo(ResponsiveAppBar);
