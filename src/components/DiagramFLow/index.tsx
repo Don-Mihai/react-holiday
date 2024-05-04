@@ -100,13 +100,13 @@ const TreeComponent = () => {
       >
         <Background />
       </ReactFlow>
-      <Sidebar
+      {/* <Sidebar
         open={Boolean(currentNode.id)}
         handleClose={closeAside}
         onChange={handleChange}
         description={currentNode.data?.description}
         completed={currentNode.data?.completed}
-      />
+      /> */}
     </div>
   );
 };
