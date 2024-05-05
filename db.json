@@ -30,9 +30,11 @@
   ],
   "steps": [
     {
-      "id": "82a8",
+      "width": 72,
+      "height": 74,
+      "id": "08ec",
       "data": {
-        "title": "Мой шагг",
+        "title": "Первый шаг",
         "description": "Описание нового шага",
         "processId": "cdc8",
         "completed": false
@@ -40,36 +42,47 @@
       "position": {
         "x": 0,
         "y": 0
-      }
-    },
-    {
-      "id": "e9db",
-      "data": {
-        "title": "Новый шаггг",
-        "description": "Описание нового шага",
-        "processId": "cdc8",
-        "completed": false
       },
-      "position": {
+      "selected": true,
+      "type": "special",
+      "style": {
+        "border": "1px solid #777",
+        "padding": 10,
+        "backgroundColor": "#D3D3D3"
+      },
+      "positionAbsolute": {
         "x": 0,
         "y": 0
       }
     },
     {
-      "id": "2925",
+      "width": 72,
+      "height": 74,
+      "id": "eb28",
       "data": {
-        "title": "Новый шаг",
+        "title": "ВТорой шаг",
         "description": "Описание нового шага",
         "processId": "cdc8",
         "completed": false
       },
       "position": {
+        "x": 0,
+        "y": 100
+      },
+      "selected": true,
+      "type": "special",
+      "style": {
+        "border": "1px solid #777",
+        "padding": 10,
+        "backgroundColor": "#D3D3D3"
+      },
+      "positionAbsolute": {
         "x": 0,
         "y": 100
       }
     },
     {
-      "id": "2650",
+      "id": "d7d1",
       "data": {
         "title": "Новый шаг",
         "description": "Описание нового шага",
@@ -78,11 +91,11 @@
       },
       "position": {
         "x": 0,
-        "y": 100
+        "y": 200
       }
     },
     {
-      "id": "fab2",
+      "id": "84d6",
       "data": {
         "title": "Новый шаг",
         "description": "Описание нового шага",
@@ -91,7 +104,20 @@
       },
       "position": {
         "x": 0,
-        "y": 100
+        "y": 300
+      }
+    },
+    {
+      "id": "90d2",
+      "data": {
+        "title": "Новый шаг",
+        "description": "Описание нового шага",
+        "processId": "cdc8",
+        "completed": false
+      },
+      "position": {
+        "x": 0,
+        "y": 400
       }
     }
   ]

@@ -43,7 +43,6 @@ const Process = () => {
   };
 
   const handleAdd = async () => {
-    console.log(steps.length);
     const payload: PStepPost = {
       data: {
         title: 'Новый шаг',
@@ -53,7 +52,7 @@ const Process = () => {
       },
       position: {
         x: 0,
-        y: steps.length * 50,
+        y: steps.length * 100,
       },
     };
 
@@ -87,15 +86,6 @@ const Process = () => {
   const handleClick = useCallback((step: IStep) => {
     setCurrentStep(step);
   }, []);
-
-  const addButton = useMemo(
-    () => (
-      <Button onClick={handleAdd} className="page-process__add-button" variant="contained">
-        Добавить
-      </Button>
-    ),
-    []
-  );
 
   return (
     <div className="page-process">
@@ -149,7 +139,9 @@ const Process = () => {
         </ToggleButtonGroup>
       </Sidebar>
 
-      {addButton}
+      <Button onClick={handleAdd} className="page-process__add-button" variant="contained">
+        Добавить
+      </Button>
     </div>
   );
 };
