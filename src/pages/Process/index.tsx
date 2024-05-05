@@ -80,7 +80,13 @@ const Process = () => {
   };
 
   const handleChangeStep = (e: any) => {
-    setCurrentStep({ ...currentStep, data: { ...currentStep.data, [e.target.name]: e.target.value } });
+    let value = e.target.value;
+
+    if (e.target.name === 'completed') {
+      value = value === 'true';
+    }
+
+    setCurrentStep({ ...currentStep, data: { ...currentStep.data, [e.target.name]: value } });
   };
 
   const handleClick = useCallback((step: IStep) => {
@@ -143,8 +149,10 @@ const Process = () => {
           fullWidth
           style={{ marginBottom: '20px' }}
         >
-          <ToggleButton value={false}>Незавершенная</ToggleButton>
-          <ToggleButton value={true} color="success">
+          <ToggleButton value={false} name="completed">
+            Незавершенная
+          </ToggleButton>
+          <ToggleButton value={true} color="success" name="completed">
             Завершенная
           </ToggleButton>
         </ToggleButtonGroup>

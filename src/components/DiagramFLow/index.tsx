@@ -1,11 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import ReactFlow, { Background, useNodesState, useEdgesState, Position, Handle, addEdge } from 'react-flow-renderer';
-import { Avatar, Button, Drawer, TextField, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ImageUploadIcon from '@mui/icons-material/CloudUpload';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import Sidebar from '../Sidebar';
+import { Avatar, Tooltip } from '@mui/material';
 import { Step } from '../../redux/Step/types';
 
 const nodeTypes = {
@@ -60,10 +55,6 @@ const DiagramFlow = ({ diagramNodes, diagramEdges, children, onClick }: Props) =
   );
 
   const onConnect = useCallback((params: any) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
-
-  const closeAside = () => {
-    setCurrentNode({});
-  };
 
   const handleChange = (field: string, newValue: any) => {
     setCurrentNode((prevNode: any) => ({
