@@ -124,6 +124,17 @@ const Process = () => {
 
       <Sidebar open={Boolean(currentStep?.id)} handleClose={handleClosetStep} handleSave={handleSaveStep}>
         <TextField onChange={handleChangeStep} name="title" value={currentStep?.data?.title} label="Название" variant="outlined" />
+        <TextField
+          label="Описание"
+          multiline
+          rows={4}
+          value={currentStep?.data?.description}
+          name="description"
+          onChange={handleChangeStep}
+          variant="outlined"
+          fullWidth
+          style={{ marginBottom: '20px' }}
+        />
         <ToggleButtonGroup
           color="primary"
           value={currentStep?.data?.completed}
