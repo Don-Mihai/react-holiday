@@ -70,6 +70,7 @@ const DiagramFlow = ({ diagramNodes, diagramEdges, children, onClick }: Props) =
       <ReactFlow
         nodes={nodes.map((node) => ({
           ...node,
+          // поменять ключ
           type: 'costumNode',
         }))}
         edges={edges}
