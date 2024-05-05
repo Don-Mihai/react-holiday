@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import ReactFlow, { Background, useNodesState, useEdgesState, Position, Handle, addEdge } from 'react-flow-renderer';
-import { Button, Drawer, TextField, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
+import { Avatar, Button, Drawer, TextField, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ImageUploadIcon from '@mui/icons-material/CloudUpload';
 import { useSelector } from 'react-redux';
@@ -11,12 +11,12 @@ import { Step } from '../../redux/Step/types';
 const nodeTypes = {
   special: ({ data }: any) => (
     <Tooltip title={data.title} placement="right">
-      <div>
+      <>
         <Handle type="target" position={Position.Top} style={{ background: '#555' }} />
-        <img src={data.imgUrl} alt="" style={{ width: 50, height: 50 }} />
+        <Avatar src={data.imgUrl} />
 
         <Handle type="source" position={Position.Bottom} style={{ background: '#555' }} />
-      </div>
+      </>
     </Tooltip>
   ),
 };

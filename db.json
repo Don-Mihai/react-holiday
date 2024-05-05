@@ -64,7 +64,8 @@
         "title": "ВТорой шаг",
         "description": "Описание нового шага",
         "processId": "cdc8",
-        "completed": false
+        "completed": false,
+        "imgUrl": "https://wiki.mininuniver.ru/images/a/a4/Милый_котик.jpg"
       },
       "position": {
         "x": 0,

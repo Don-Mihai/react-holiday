@@ -3,7 +3,7 @@ import Drawer from '@mui/material/Drawer';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ImageUploadIcon from '@mui/icons-material/CloudUpload';
 import './style.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 
 interface Props {
@@ -17,6 +17,7 @@ interface Props {
 const Sidebar = ({ classNames, open, handleClose, handleSave, children }: Props) => {
   const [openUrl, setOpenUrl] = useState(false);
   const [formValues, setFormValues] = useState<any>({});
+
   const handleChange = (e: any) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
@@ -28,8 +29,14 @@ const Sidebar = ({ classNames, open, handleClose, handleSave, children }: Props)
     handleSave?.(formValues);
   };
 
+  const onClose = () => {
+    handleClose();
+    setFormValues({});
+    setOpenUrl(false);
+  };
+
   return (
-    <Drawer anchor={'right'} className="component-sidebar" open={open} onClose={handleClose}>
+    <Drawer anchor={'right'} className="component-sidebar" open={open} onClose={onClose}>
       <div className="component-sidebar__container">
         {children}
         <Button onClick={handleUploadIconClick} variant="contained" component="label" startIcon={<ImageUploadIcon />} style={{ marginBottom: '20px' }}>
