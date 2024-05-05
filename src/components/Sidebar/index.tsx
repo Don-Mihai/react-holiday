@@ -7,7 +7,7 @@ import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 
 interface Props {
-  handleSave?: () => void;
+  handleSave?: (innerValues: any) => void;
   classNames?: string[];
   open: boolean;
   handleClose: () => void;
@@ -16,8 +16,16 @@ interface Props {
 
 const Sidebar = ({ classNames, open, handleClose, handleSave, children }: Props) => {
   const [openUrl, setOpenUrl] = useState(false);
+  const [formValues, setFormValues] = useState<any>({});
+  const handleChange = (e: any) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value });
+  };
   const handleUploadIconClick = () => {
     setOpenUrl(true);
+  };
+
+  const onSave = () => {
+    handleSave?.(formValues);
   };
 
   return (
@@ -27,10 +35,10 @@ const Sidebar = ({ classNames, open, handleClose, handleSave, children }: Props)
         <Button onClick={handleUploadIconClick} variant="contained" component="label" startIcon={<ImageUploadIcon />} style={{ marginBottom: '20px' }}>
           Загрузить иконку
         </Button>
-        {openUrl ? <TextField label="Путь к иконке" variant="outlined" /> : ''}
+        {openUrl ? <TextField onChange={handleChange} name="imgUrl" value={formValues?.imgUrl} label="Путь к иконке" variant="outlined" /> : ''}
 
         <div className="component-sidebar__bottom-buttons">
-          <Button variant="contained" component="label" onClick={handleSave}>
+          <Button variant="contained" component="label" onClick={onSave}>
             Сохранить
           </Button>
 

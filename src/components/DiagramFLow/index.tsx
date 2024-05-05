@@ -13,7 +13,7 @@ const nodeTypes = {
     <Tooltip title={data.title} placement="right">
       <div>
         <Handle type="target" position={Position.Top} style={{ background: '#555' }} />
-        <img src={data.icon} alt="" style={{ width: 50, height: 50 }} />
+        <img src={data.imgUrl} alt="" style={{ width: 50, height: 50 }} />
 
         <Handle type="source" position={Position.Bottom} style={{ background: '#555' }} />
       </div>

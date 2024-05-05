@@ -75,8 +75,8 @@ const Process = () => {
     setProcess({ ...process, [e.target.name]: e.target.value });
   };
 
-  const handleSaveStep = () => {
-    dispatch(stepUpdate(currentStep));
+  const handleSaveStep = (innerValues: any) => {
+    dispatch(stepUpdate({ ...currentStep, data: { ...currentStep.data, ...innerValues } }));
   };
 
   const handleChangeStep = (e: any) => {
