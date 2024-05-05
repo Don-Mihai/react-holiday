@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { PStepPost } from '../../redux/Step/types';
+import { PStepPost, emptyStep } from '../../redux/Step/types';
 import { AppDispatch, RootState } from '../../redux/store';
 import { get, post, remove } from '../../redux/Step';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -27,7 +27,7 @@ const Process = () => {
   const params = useParams();
   const dispatch = useDispatch<AppDispatch>();
 
-  const [currentStep, setCurrentStep] = useState<IStep>({} as IStep);
+  const [currentStep, setCurrentStep] = useState<IStep>(emptyStep);
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(false);
 
@@ -65,7 +65,7 @@ const Process = () => {
   }, []);
 
   const handleClosetStep = () => {
-    setCurrentStep({} as IStep);
+    setCurrentStep(emptyStep);
   };
 
   const handleSave = () => {
@@ -133,24 +133,20 @@ const Process = () => {
       )}
 
       <Sidebar open={Boolean(currentStep?.id)} handleClose={handleClosetStep} handleSave={handleSaveStep}>
-        {Boolean(currentStep?.id) && (
-          <>
-            <TextField onChange={handleChangeStep} name="title" value={currentStep?.data?.title} label="Название" variant="outlined" />
-            <ToggleButtonGroup
-              color="primary"
-              value={currentStep?.data?.completed}
-              exclusive
-              onChange={handleChangeStep}
-              fullWidth
-              style={{ marginBottom: '20px' }}
-            >
-              <ToggleButton value={false}>Незавершенная</ToggleButton>
-              <ToggleButton value={true} color="success">
-                Завершенная
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </>
-        )}
+        <TextField onChange={handleChangeStep} name="title" value={currentStep?.data?.title} label="Название" variant="outlined" />
+        <ToggleButtonGroup
+          color="primary"
+          value={currentStep?.data?.completed}
+          exclusive
+          onChange={handleChangeStep}
+          fullWidth
+          style={{ marginBottom: '20px' }}
+        >
+          <ToggleButton value={false}>Незавершенная</ToggleButton>
+          <ToggleButton value={true} color="success">
+            Завершенная
+          </ToggleButton>
+        </ToggleButtonGroup>
       </Sidebar>
 
       {addButton}

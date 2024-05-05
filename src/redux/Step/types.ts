@@ -19,3 +19,18 @@ export interface InitialState {
   steps: Step[];
   isLoading: boolean;
 }
+
+export const emptyStep: Step = {
+  id: '',
+  data: {
+    title: '',
+    description: '',
+    imgUrl: '',
+    completed: false,
+    processId: '',
+  },
+  position: {
+    x: 0,
+    y: 0,
+  },
+};
