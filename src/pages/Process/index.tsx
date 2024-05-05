@@ -43,6 +43,7 @@ const Process = () => {
   };
 
   const handleAdd = async () => {
+    console.log(steps.length);
     const payload: PStepPost = {
       data: {
         title: 'Новый шаг',
@@ -52,7 +53,7 @@ const Process = () => {
       },
       position: {
         x: 0,
-        y: 0,
+        y: steps.length * 50,
       },
     };
 
@@ -80,7 +81,7 @@ const Process = () => {
   };
 
   const handleChangeStep = (e: any) => {
-    setCurrentStep({ ...currentStep, data: { ...currentStep.data, completed: e.target.value === 'true' ? true : false } });
+    setCurrentStep({ ...currentStep, data: { ...currentStep.data, [e.target.name]: e.target.value } });
   };
 
   const handleClick = useCallback((step: IStep) => {
@@ -111,7 +112,7 @@ const Process = () => {
       </div>
 
       <Sidebar open={open} handleClose={() => setOpen(false)} handleSave={handleSave}>
-        <TextField label="Название" variant="outlined" />
+        <TextField label="Название" value={process.title} name="title" onChange={handleChangeProcess} variant="outlined" />
         <TextField
           label="Описание"
           multiline
@@ -132,20 +133,24 @@ const Process = () => {
       )}
 
       <Sidebar open={Boolean(currentStep?.id)} handleClose={handleClosetStep} handleSave={handleSaveStep}>
-        <TextField label="Название" variant="outlined" />
-        <ToggleButtonGroup
-          color="primary"
-          value={currentStep?.data?.completed}
-          exclusive
-          onChange={handleChangeStep}
-          fullWidth
-          style={{ marginBottom: '20px' }}
-        >
-          <ToggleButton value={false}>Незавершенная</ToggleButton>
-          <ToggleButton value={true} color="success">
-            Завершенная
-          </ToggleButton>
-        </ToggleButtonGroup>
+        {Boolean(currentStep?.id) && (
+          <>
+            <TextField onChange={handleChangeStep} name="title" value={currentStep?.data?.title} label="Название" variant="outlined" />
+            <ToggleButtonGroup
+              color="primary"
+              value={currentStep?.data?.completed}
+              exclusive
+              onChange={handleChangeStep}
+              fullWidth
+              style={{ marginBottom: '20px' }}
+            >
+              <ToggleButton value={false}>Незавершенная</ToggleButton>
+              <ToggleButton value={true} color="success">
+                Завершенная
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </>
+        )}
       </Sidebar>
 
       {addButton}
