@@ -2,19 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import ReactFlow, { Background, useNodesState, useEdgesState, Position, Handle, addEdge } from 'react-flow-renderer';
 import { Avatar, Tooltip } from '@mui/material';
 import { Step } from '../../redux/Step/types';
+// import { CostumNode } from './CostumNode';
 
-const nodeTypes = {
-  special: ({ data }: any) => (
-    <Tooltip title={data.title} placement="right">
-      <>
-        <Handle type="target" position={Position.Top} style={{ background: '#555' }} />
-        <Avatar src={data.imgUrl} />
-
-        <Handle type="source" position={Position.Bottom} style={{ background: '#555' }} />
-      </>
-    </Tooltip>
-  ),
-};
+// const nodeTypes = { costumNode: CostumNode };
 interface Props {
   diagramNodes: any;
   diagramEdges?: any;
@@ -81,8 +71,7 @@ const DiagramFlow = ({ diagramNodes, diagramEdges, children, onClick }: Props) =
       <ReactFlow
         nodes={nodes.map((node) => ({
           ...node,
-          type: 'special',
-          style: { border: '1px solid #777', padding: 10, backgroundColor: node.data.completed ? '#A2D2FF' : '#D3D3D3' },
+          type: 'costumNode',
         }))}
         edges={edges}
         onNodeClick={onNodeClick}
@@ -90,7 +79,7 @@ const DiagramFlow = ({ diagramNodes, diagramEdges, children, onClick }: Props) =
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        nodeTypes={nodeTypes}
+        // nodeTypes={nodeTypes}
         fitView
       >
         <Background />
