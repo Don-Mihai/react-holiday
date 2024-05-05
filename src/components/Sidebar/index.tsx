@@ -28,8 +28,6 @@ const Sidebar = ({ classNames, open, handleClose, handleSave, children }: Props)
           Загрузить иконку
         </Button>
         {openUrl ? <TextField label="Путь к иконке" variant="outlined" /> : ''}
-        <TextField label="Название" variant="outlined" />
-        <TextField label="Описание" variant="outlined" />
 
         <div className="component-sidebar__bottom-buttons">
           <Button variant="contained" component="label" onClick={handleSave}>

@@ -111,6 +111,7 @@ const Process = () => {
       </div>
 
       <Sidebar open={open} handleClose={() => setOpen(false)} handleSave={handleSave}>
+        <TextField label="Название" variant="outlined" />
         <TextField
           label="Описание"
           multiline
@@ -131,6 +132,7 @@ const Process = () => {
       )}
 
       <Sidebar open={Boolean(currentStep?.id)} handleClose={handleClosetStep} handleSave={handleSaveStep}>
+        <TextField label="Название" variant="outlined" />
         <ToggleButtonGroup
           color="primary"
           value={currentStep?.data?.completed}
