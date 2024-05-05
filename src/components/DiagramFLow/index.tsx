@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import ReactFlow, { Background, useNodesState, useEdgesState, Position, Handle, addEdge } from 'react-flow-renderer';
-import { Avatar, Tooltip } from '@mui/material';
+import ReactFlow, { Background, useNodesState, useEdgesState, Position, addEdge } from 'react-flow-renderer';
 import { Step } from '../../redux/Step/types';
 // import { CostumNode } from './CostumNode';
 
@@ -14,7 +13,7 @@ interface Props {
 const DiagramFlow = ({ diagramNodes, diagramEdges, children, onClick }: Props) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [currentNode, setCurrentNode] = React.useState<any>({});
+  const [currentNode, setCurrentNode] = useState<any>({});
 
   useEffect(() => {
     setNodes(diagramNodes);
