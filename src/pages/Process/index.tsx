@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PStepPost } from '../../redux/Step/types';
 import { AppDispatch, RootState } from '../../redux/store';
 import { get, post, remove } from '../../redux/Step';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Step from '../../components/Step';
 import Sidebar from '../../components/Sidebar';
 import { Step as IStep } from '../../redux/Step/types';
@@ -17,7 +17,9 @@ import { IconButton } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import GridViewIcon from '@mui/icons-material/GridView';
 import './style.scss';
+import DiagramFlow from '../../components/DiagramFLow';
 
 const Process = () => {
   const steps = useSelector((state: RootState) => state.Step.steps);
@@ -27,6 +29,7 @@ const Process = () => {
 
   const [currentStep, setCurrentStep] = useState<IStep>({} as IStep);
   const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState(false);
 
   useEffect(() => {
     getProcess();
@@ -41,22 +44,24 @@ const Process = () => {
 
   const handleAdd = async () => {
     const payload: PStepPost = {
-      title: 'Новый шаг',
-      description: 'Описание нового шага',
-      processId: params.id || '',
-      completed: false,
+      data: {
+        title: 'Новый шаг',
+        description: 'Описание нового шага',
+        processId: params.id || '',
+        completed: false,
+      },
+      position: {
+        x: 0,
+        y: 0,
+      },
     };
 
     dispatch(post(payload));
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = useCallback((id: string) => {
     dispatch(remove(id));
-  };
-
-  const handleClick = (step: IStep) => {
-    setCurrentStep(step);
-  };
+  }, []);
 
   const handleClosetStep = () => {
     setCurrentStep({} as IStep);
@@ -75,25 +80,36 @@ const Process = () => {
   };
 
   const handleChangeStep = (e: any) => {
-    setCurrentStep({ ...currentStep, completed: e.target.value === 'true' ? true : false });
+    setCurrentStep({ ...currentStep, data: { ...currentStep.data, completed: e.target.value === 'true' ? true : false } });
   };
 
-  console.log(currentStep);
+  const handleClick = useCallback((step: IStep) => {
+    setCurrentStep(step);
+  }, []);
+
+  const addButton = useMemo(
+    () => (
+      <Button onClick={handleAdd} className="page-process__add-button" variant="contained">
+        Добавить
+      </Button>
+    ),
+    []
+  );
 
   return (
     <div className="page-process">
       <Header />
       <div className="page-process__header">
         <div className="page-process__title">{process.title}</div>
+        <IconButton onClick={() => setMode(!mode)}>
+          <GridViewIcon />
+        </IconButton>
+
         <IconButton onClick={() => setOpen(true)}>
           <EditIcon />
         </IconButton>
       </div>
 
-      {steps.map((step) => (
-        <Step onClick={handleClick} onDelete={handleDelete} step={step} key={step.id} />
-      ))}
-      {/* все инпуты передать через children */}
       <Sidebar open={open} handleClose={() => setOpen(false)} handleSave={handleSave}>
         <TextField
           label="Описание"
@@ -108,17 +124,29 @@ const Process = () => {
         />
       </Sidebar>
 
+      {!mode ? (
+        steps.map((step) => <Step onClick={handleClick} onDelete={handleDelete} step={step} key={step.id} />)
+      ) : (
+        <DiagramFlow diagramNodes={steps} onClick={handleClick}></DiagramFlow>
+      )}
+
       <Sidebar open={Boolean(currentStep?.id)} handleClose={handleClosetStep} handleSave={handleSaveStep}>
-        <ToggleButtonGroup color="primary" value={currentStep.completed} exclusive onChange={handleChangeStep} fullWidth style={{ marginBottom: '20px' }}>
+        <ToggleButtonGroup
+          color="primary"
+          value={currentStep?.data?.completed}
+          exclusive
+          onChange={handleChangeStep}
+          fullWidth
+          style={{ marginBottom: '20px' }}
+        >
           <ToggleButton value={false}>Незавершенная</ToggleButton>
           <ToggleButton value={true} color="success">
             Завершенная
           </ToggleButton>
         </ToggleButtonGroup>
       </Sidebar>
-      <Button onClick={handleAdd} className="page-process__add-button" variant="contained">
-        Добавить
-      </Button>
+
+      {addButton}
     </div>
   );
 };

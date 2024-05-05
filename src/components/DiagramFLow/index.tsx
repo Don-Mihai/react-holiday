@@ -6,10 +6,11 @@ import ImageUploadIcon from '@mui/icons-material/CloudUpload';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import Sidebar from '../Sidebar';
+import { Step } from '../../redux/Step/types';
 
 const nodeTypes = {
   special: ({ data }: any) => (
-    <Tooltip title={data.label} placement="right">
+    <Tooltip title={data.title} placement="right">
       <div>
         <Handle type="target" position={Position.Top} style={{ background: '#555' }} />
         <img src={data.icon} alt="" style={{ width: 50, height: 50 }} />
@@ -19,13 +20,16 @@ const nodeTypes = {
     </Tooltip>
   ),
 };
-
-const TreeComponent = () => {
+interface Props {
+  diagramNodes: any;
+  diagramEdges?: any;
+  children?: any;
+  onClick?: (step: Step) => void;
+}
+const DiagramFlow = ({ diagramNodes, diagramEdges, children, onClick }: Props) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [currentNode, setCurrentNode] = React.useState<any>({});
-
-  const { nodes: diagramNodes, edges: diagramEdges } = useSelector((state: RootState) => state.Diagram);
 
   useEffect(() => {
     setNodes(diagramNodes);
@@ -33,8 +37,8 @@ const TreeComponent = () => {
   }, [diagramNodes, diagramEdges]);
 
   const onNodeClick = useCallback((event: any, node: any) => {
-    console.log(node);
     setCurrentNode(node);
+    onClick?.(node);
   }, []);
 
   const handlePaneClick = useCallback(
@@ -100,15 +104,9 @@ const TreeComponent = () => {
       >
         <Background />
       </ReactFlow>
-      {/* <Sidebar
-        open={Boolean(currentNode.id)}
-        handleClose={closeAside}
-        onChange={handleChange}
-        description={currentNode.data?.description}
-        completed={currentNode.data?.completed}
-      /> */}
+      {children}
     </div>
   );
 };
 
-export default TreeComponent;
+export default DiagramFlow;

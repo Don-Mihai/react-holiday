@@ -46,7 +46,7 @@ export const {} = stepSlice.actions;
 export default stepSlice.reducer;
 
 export const get = createAsyncThunk('step/get', async (processId: string | undefined): Promise<Step[]> => {
-  const steps = processId ? (await axios.get(BASE_URL + `steps?processId=${processId}`)).data : [];
+  const steps = processId ? (await axios.get(BASE_URL + `steps?data.processId=${processId}`)).data : [];
 
   return steps;
 });

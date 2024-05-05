@@ -22,7 +22,6 @@ const Home = () => {
       <Header />
       <h1>Home</h1>
       <h2>{user?.email}</h2>
-      <DiagramFlow />
     </div>
   );
 };

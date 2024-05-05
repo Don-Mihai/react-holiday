@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import { Avatar, Button, Drawer, TextField, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -40,9 +40,9 @@ const Step = ({ step, onDelete, onClick }: Props) => {
 
   return (
     <div className="step" onClick={handleClick}>
-      <Avatar alt="Step" src={step.imgUrl} />
-      <h3 className="step__title">{step.title}</h3>
-      <p className="step__description">{step.description}</p>
+      <Avatar alt="Step" src={step.data.imgUrl} />
+      <h3 className="step__title">{step.data.title}</h3>
+      <p className="step__description">{step.data.description}</p>
       <div className="step__actions">
         <IconButton aria-label="delete" onClick={handleDelete}>
           <DeleteIcon />
@@ -52,4 +52,4 @@ const Step = ({ step, onDelete, onClick }: Props) => {
   );
 };
 
-export default Step;
+export default memo(Step);
