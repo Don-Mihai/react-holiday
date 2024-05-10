@@ -1,0 +1,22 @@
+.completed {
+  filter: grayscale(1);
+}
+
+.container {
+  border: 2px solid black;
+  border-radius: 25px;
+  //padding: 20px;
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  //background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_p2L8LxmtDwsg1ZLZ8O5Yr2DRMq1Dco57HA&s");
+  //background-position: left top;
+  //background-color: #b5edc2;
+}
+
+.container img {
+  height: 100%;
+  width: 100%;
+  border-radius: 25px;
+  object-fit: cover;
+}
