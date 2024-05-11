@@ -1,12 +1,6 @@
 export interface Step {
   id: string;
-  data: {
-    title: string;
-    description?: string;
-    imgUrl?: string;
-    completed?: boolean;
-    processId: string;
-  };
+  data: StepData;
   position?: {
     x: number;
     y: number;
@@ -14,7 +8,6 @@ export interface Step {
 }
 
 export interface StepData {
-  id: string;
   title: string;
   description?: string;
   imgUrl?: string;

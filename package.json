@@ -12,6 +12,7 @@
     "@types/react": "^18.2.74",
     "@types/react-dom": "^18.2.24",
     "axios": "^1.6.8",
+    "classnames": "^2.5.1",
     "gojs": "^2.3.16",
     "json-server": "^1.0.0-alpha.23",
     "react": "^18.2.0",
