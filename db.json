@@ -30,61 +30,42 @@
   ],
   "steps": [
     {
-      "width": 62,
-      "height": 62,
-      "id": "08ec",
+      "width": 100,
+      "height": 100,
+      "id": "eadb",
       "data": {
-        "title": "Первый шаг",
-        "description": "Описание нового шагааааа",
-        "processId": "cdc8",
-        "completed": false,
-        "imgUrl": "https://i.pinimg.com/originals/e8/8f/30/e88f3028afe762960b7a2c11837b34d1.jpg"
-      },
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "selected": true,
-      "type": "special",
-      "style": {
-        "border": "1px solid #777",
-        "padding": 10,
-        "backgroundColor": "#A2D2FF"
-      },
-      "positionAbsolute": {
-        "x": 0,
-        "y": 0
-      }
-    },
-    {
-      "width": 62,
-      "height": 62,
-      "id": "eb28",
-      "data": {
-        "title": "ВТорой шаг",
+        "title": "Новый шаг",
         "description": "Описание нового шага",
         "processId": "cdc8",
         "completed": true,
-        "imgUrl": "https://wiki.mininuniver.ru/images/a/a4/Милый_котик.jpg"
+        "imgUrl": "https://mykaleidoscope.ru/x/uploads/posts/2022-10/1666137209_33-mykaleidoscope-ru-p-veselii-kotik-oboi-36.jpg"
       },
       "position": {
         "x": 0,
-        "y": 100
+        "y": 0
       },
       "selected": true,
-      "type": "special",
-      "style": {
-        "border": "1px solid #777",
-        "padding": 10,
-        "backgroundColor": "#D3D3D3"
-      },
+      "type": "customNode",
       "positionAbsolute": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "6360",
+      "data": {
+        "title": "Новый шаг",
+        "description": "Описание нового шага",
+        "processId": "cdc8",
+        "completed": false
+      },
+      "position": {
         "x": 0,
         "y": 100
       }
     },
     {
-      "id": "d7d1",
+      "id": "cc6d",
       "data": {
         "title": "Новый шаг",
         "description": "Описание нового шага",

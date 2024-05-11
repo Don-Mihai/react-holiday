@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import ReactFlow, { Background, useNodesState, useEdgesState, Position, addEdge } from 'react-flow-renderer';
 import { Step } from '../../redux/Step/types';
-// import { CostumNode } from './CostumNode';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
+import { connect, setEdges, setNodes, updateEdges, updateNodes } from '../../redux/Diagram';
+import CustomNode from '../CustomNode';
 
-// const nodeTypes = { costumNode: CostumNode };
+const nodeTypes = { customNode: CustomNode };
 interface Props {
   diagramNodes: any;
   diagramEdges?: any;
@@ -11,58 +14,32 @@ interface Props {
   onClick?: (step: Step) => void;
 }
 const DiagramFlow = ({ diagramNodes, diagramEdges, children, onClick }: Props) => {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [currentNode, setCurrentNode] = useState<any>({});
+  const dispatch = useDispatch<AppDispatch>();
+
+  const nodes = useSelector((state: RootState) => state.Diagram.nodes);
+  const edges = useSelector((state: RootState) => state.Diagram.edges);
 
   useEffect(() => {
-    setNodes(diagramNodes);
-    setEdges(diagramEdges);
+    dispatch(setNodes(diagramNodes));
+    dispatch(setEdges(diagramEdges));
   }, [diagramNodes, diagramEdges]);
 
   const onNodeClick = useCallback((event: any, node: any) => {
-    setCurrentNode(node);
     onClick?.(node);
   }, []);
 
-  const handlePaneClick = useCallback(
-    (event: any) => {
-      const reactFlowBounds = event.target.getBoundingClientRect();
-      const position = {
-        x: event.clientX - reactFlowBounds.left,
-        y: event.clientY - reactFlowBounds.top,
-      };
-      const newNode = {
-        id: `node_${Math.random()}`,
-        data: { label: `Узел ${nodes.length + 1}`, icon: '/cat.png', completed: false },
-        position,
-        sourcePosition: Position.Right,
-      };
-      setNodes((nds) => nds.concat(newNode));
-    },
-    [nodes, setNodes]
-  );
+  const handlePaneClick = useCallback((event: any) => {}, [nodes, setNodes]);
 
-  const onConnect = useCallback((params: any) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
+  const onConnect = (connection) => {
+    dispatch(connect(connection));
+  };
 
-  const handleChange = (field: string, newValue: any) => {
-    setCurrentNode((prevNode: any) => ({
-      ...prevNode,
-      data: {
-        ...prevNode.data,
-        [field]: newValue,
-      },
-    }));
+  const onNodesChange = (changes) => {
+    dispatch(updateNodes(changes));
+  };
 
-    // Обновить состояние nodes, чтобы отразить изменения в currentNode
-    setNodes((prevNodes) =>
-      prevNodes.map((node) => {
-        if (node.id === currentNode.id) {
-          return { ...node, data: { ...node.data, [field]: newValue } };
-        }
-        return node;
-      })
-    );
+  const onEdgesChange = (changes) => {
+    dispatch(updateEdges(changes));
   };
 
   return (
@@ -70,8 +47,7 @@ const DiagramFlow = ({ diagramNodes, diagramEdges, children, onClick }: Props) =
       <ReactFlow
         nodes={nodes.map((node) => ({
           ...node,
-          // поменять ключ
-          type: 'costumNode',
+          type: 'customNode',
         }))}
         edges={edges}
         onNodeClick={onNodeClick}
@@ -79,7 +55,7 @@ const DiagramFlow = ({ diagramNodes, diagramEdges, children, onClick }: Props) =
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        // nodeTypes={nodeTypes}
+        nodeTypes={nodeTypes}
         fitView
       >
         <Background />

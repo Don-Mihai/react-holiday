@@ -1,6 +1,6 @@
-// diagramSlice.js
-//@ts-nocheck
 import { createSlice } from '@reduxjs/toolkit';
+import { Connection, Edge, EdgeChange, Node, NodeChange, addEdge, applyNodeChanges, applyEdgeChanges } from 'react-flow-renderer';
+
 const initialState = {
   nodes: [
     { id: '1', type: 'input', data: { label: 'HTML', icon: '/cat.png', completed: false }, position: { x: 250, y: 5 } },
@@ -37,41 +37,24 @@ export const diagramSlice = createSlice({
   name: 'diagram',
   initialState,
   reducers: {
-    addNode: (state, action) => {
-      state.nodes.push(action.payload);
+    updateNodes: (state, action) => {
+      state.nodes = applyNodeChanges(action.payload, state.nodes);
     },
-    addEdge: (state, action) => {
-      state.edges.push(action.payload);
+    updateEdges: (state, action) => {
+      state.edges = applyEdgeChanges(action.payload, state.edges);
     },
-    toggleNodeStatus: (state, action) => {
-      const node = state.nodes.find((node) => node.id === action.payload);
-      if (node) {
-        node.data = {
-          ...node.data,
-          completed: !node.data.completed,
-        };
-      }
+    connect: (state, action) => {
+      state.edges = addEdge(action.payload, state.edges);
     },
-    updateNodes(state, action: PayloadAction<any[]>) {
-      // Простое обновление, например, для изменения положения узлов
-      action.payload.forEach((update) => {
-        const node = state.nodes.find((n) => n.id === update.id);
-        if (node) {
-          // В этом примере обновляем только положение узла, но вы можете расширить логику по необходимости
-          node.position = update.position;
-        }
-      });
+    setNodes: (state, action) => {
+      state.nodes = action.payload;
     },
-    // Обновление рёбер
-    updateEdges(state, action: PayloadAction<any[]>) {
-      // Пример обновления может включать добавление нового ребра или удаление существующего
-      // Здесь приведен пример добавления ребра
-      state.edges = [...state.edges, ...action.payload];
+    setEdges: (state, action) => {
+      state.edges = action.payload;
     },
-    // Добавьте другие редьюсеры по мере необходимости
   },
 });
 
-export const { addNode, addEdge, toggleNodeStatus, updateEdges, updateNodes } = diagramSlice.actions;
+export const { updateNodes, updateEdges, connect, setNodes, setEdges } = diagramSlice.actions;
 
 export default diagramSlice.reducer;
