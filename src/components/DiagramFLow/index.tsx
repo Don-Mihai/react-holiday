@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import ReactFlow, { Background, useNodesState, useEdgesState, Position, addEdge } from 'react-flow-renderer';
+import ReactFlow, { Background, NodeChange, EdgeChange, Connection } from 'react-flow-renderer';
 import { Step } from '../../redux/Step/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
@@ -30,16 +30,19 @@ const DiagramFlow = ({ diagramNodes, diagramEdges, children, onClick }: Props) =
 
   const handlePaneClick = useCallback((event: any) => {}, [nodes, setNodes]);
 
-  const onConnect = (connection) => {
-    dispatch(connect(connection));
-  };
-
-  const onNodesChange = (changes) => {
+  const onNodesChange = (changes: NodeChange[]) => {
     dispatch(updateNodes(changes));
+    // dispatch(saveFlowData());
   };
 
-  const onEdgesChange = (changes) => {
+  const onEdgesChange = (changes: EdgeChange[]) => {
     dispatch(updateEdges(changes));
+    // dispatch(saveFlowData());
+  };
+
+  const onConnect = (connection: Connection) => {
+    dispatch(connect(connection));
+    // dispatch(saveFlowData());
   };
 
   return (
