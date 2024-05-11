@@ -13,6 +13,15 @@ export interface Step {
   };
 }
 
+export interface StepData {
+  id: string;
+  title: string;
+  description?: string;
+  imgUrl?: string;
+  completed?: boolean;
+  processId: string;
+}
+
 export type PStepPost = Omit<Step, 'id'>;
 
 export interface InitialState {
