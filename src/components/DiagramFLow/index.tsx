@@ -3,7 +3,7 @@ import ReactFlow, { Background, NodeChange, EdgeChange, Connection } from 'react
 import { Step } from '../../redux/Step/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
-import { connect, setEdges, setNodes, updateEdges, updateNodes } from '../../redux/Diagram';
+import { addEdgeAsync, connect, setEdges, setNodes, updateEdges, updateNodes } from '../../redux/Diagram';
 import CustomNode from '../CustomNode';
 
 const nodeTypes = { customNode: CustomNode };
@@ -13,7 +13,7 @@ interface Props {
   children?: any;
   onClick?: (step: Step) => void;
 }
-const DiagramFlow = ({ diagramNodes, diagramEdges, children, onClick }: Props) => {
+const DiagramFlow = ({ diagramNodes, diagramEdges = [], children, onClick }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const nodes = useSelector((state: RootState) => state.Diagram.nodes);
@@ -22,7 +22,7 @@ const DiagramFlow = ({ diagramNodes, diagramEdges, children, onClick }: Props) =
   useEffect(() => {
     dispatch(setNodes(diagramNodes));
     dispatch(setEdges(diagramEdges));
-  }, [diagramNodes, diagramEdges]);
+  }, [diagramNodes.length, diagramEdges.length]);
 
   const onNodeClick = useCallback((event: any, node: any) => {
     onClick?.(node);
@@ -41,7 +41,8 @@ const DiagramFlow = ({ diagramNodes, diagramEdges, children, onClick }: Props) =
   };
 
   const onConnect = (connection: Connection) => {
-    dispatch(connect(connection));
+    dispatch(addEdgeAsync(connection));
+
     // dispatch(saveFlowData());
   };
 

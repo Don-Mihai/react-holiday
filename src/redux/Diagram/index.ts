@@ -56,8 +56,18 @@ export const diagramSlice = createSlice({
       state.edges = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(addEdgeAsync.fulfilled, (state, action) => {
+      state.edges = addEdge(action.payload, state.edges);
+    });
+  },
 });
 
 export const { updateNodes, updateEdges, connect, setNodes, setEdges } = diagramSlice.actions;
 
 export default diagramSlice.reducer;
+
+export const addEdgeAsync = createAsyncThunk('diagram/addEdgeAsync', async (payload: any, thunkAPI) => {
+  const edge = (await axios.post(BASE_URL + 'edges', payload)).data;
+  return edge;
+});

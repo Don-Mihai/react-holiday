@@ -41,15 +41,16 @@
         "imgUrl": "https://mykaleidoscope.ru/x/uploads/posts/2022-10/1666137209_33-mykaleidoscope-ru-p-veselii-kotik-oboi-36.jpg"
       },
       "position": {
-        "x": 0,
-        "y": 0
+        "x": 84.7,
+        "y": -31.35000000000001
       },
       "selected": true,
       "type": "customNode",
       "positionAbsolute": {
-        "x": 0,
-        "y": 0
-      }
+        "x": 84.7,
+        "y": -31.35000000000001
+      },
+      "dragging": false
     },
     {
       "width": 100,
@@ -74,6 +75,8 @@
       }
     },
     {
+      "width": 100,
+      "height": 100,
       "id": "cc6d",
       "data": {
         "title": "Новый шаг",
@@ -82,9 +85,67 @@
         "completed": false
       },
       "position": {
+        "x": 253.27499999999998,
+        "y": 86.975
+      },
+      "selected": true,
+      "positionAbsolute": {
+        "x": 253.27499999999998,
+        "y": 86.975
+      },
+      "dragging": false,
+      "type": "customNode"
+    },
+    {
+      "id": "5960",
+      "data": {
+        "title": "Новый шаг",
+        "description": "Описание нового шага",
+        "processId": "e307",
+        "completed": false
+      },
+      "position": {
         "x": 0,
-        "y": 200
+        "y": 0
       }
+    },
+    {
+      "width": 100,
+      "height": 100,
+      "id": "885e",
+      "data": {
+        "title": "Новый шаг",
+        "description": "Описание нового шага",
+        "processId": "e307",
+        "completed": false
+      },
+      "position": {
+        "x": 145.20000000000005,
+        "y": 37.29999999999998
+      },
+      "selected": true,
+      "positionAbsolute": {
+        "x": 145.20000000000005,
+        "y": 37.29999999999998
+      },
+      "dragging": false,
+      "type": "customNode"
+    }
+  ],
+  "edges": [
+    {
+      "id": "83e2",
+      "source": "eadb",
+      "sourceHandle": "a",
+      "target": "cc6d",
+      "targetHandle": null
+    },
+    {
+      "id": "970a",
+      "source": "eadb",
+      "sourceHandle": "a",
+      "target": "cc6d",
+      "targetHandle": null
     }
   ]
 }
