@@ -10,10 +10,11 @@ const nodeTypes = { customNode: CustomNode };
 interface Props {
   diagramNodes: any;
   diagramEdges?: any;
+  parentId?: string;
   children?: any;
   onClick?: (step: Step) => void;
 }
-const DiagramFlow = ({ diagramNodes, diagramEdges = [], children, onClick }: Props) => {
+const DiagramFlow = ({ diagramNodes, diagramEdges = [], parentId, children, onClick }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const nodes = useSelector((state: RootState) => state.Diagram.nodes);
@@ -41,7 +42,11 @@ const DiagramFlow = ({ diagramNodes, diagramEdges = [], children, onClick }: Pro
   };
 
   const onConnect = (connection: Connection) => {
-    dispatch(addEdgeAsync(connection));
+    const payload = {
+      ...connection,
+      parentId,
+    };
+    dispatch(addEdgeAsync(payload));
 
     // dispatch(saveFlowData());
   };

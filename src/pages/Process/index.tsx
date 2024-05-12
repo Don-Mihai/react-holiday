@@ -20,9 +20,11 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import GridViewIcon from '@mui/icons-material/GridView';
 import './style.scss';
 import DiagramFlow from '../../components/DiagramFLow';
+import { getEdges } from '../../redux/Diagram';
 
 const Process = () => {
   const steps = useSelector((state: RootState) => state.Step.steps);
+  const edges = useSelector((state: RootState) => state.Diagram.edges);
   const [process, setProcess] = useState<IProcess>({} as IProcess);
   const params = useParams();
   const dispatch = useDispatch<AppDispatch>();
@@ -33,6 +35,7 @@ const Process = () => {
 
   useEffect(() => {
     getProcess();
+    dispatch(getEdges(params.id));
     dispatch(get(params.id));
   }, []);
 
@@ -125,7 +128,7 @@ const Process = () => {
       {!mode ? (
         steps.map((step) => <Step onClick={handleClick} onDelete={handleDelete} step={step} key={step.id} />)
       ) : (
-        <DiagramFlow diagramNodes={steps} onClick={handleClick}></DiagramFlow>
+        <DiagramFlow diagramNodes={steps} diagramEdges={edges} parentId={params?.id} onClick={handleClick}></DiagramFlow>
       )}
 
       <Sidebar open={Boolean(currentStep?.id)} handleClose={handleClosetStep} handleSave={handleSaveStep}>

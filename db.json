@@ -132,14 +132,23 @@
       "type": "customNode"
     },
     {
+      "width": 100,
+      "height": 100,
       "id": "a16f",
       "data": {
         "title": "Новый шаг",
         "description": "Описание нового шага",
         "processId": "cdc8",
-        "completed": false
+        "completed": false,
+        "imgUrl": "https://w.forfun.com/fetch/fe/fe75d97103a355e3147935593c539766.jpeg"
       },
       "position": {
+        "x": 0,
+        "y": 300
+      },
+      "selected": true,
+      "type": "customNode",
+      "positionAbsolute": {
         "x": 0,
         "y": 300
       }
@@ -147,60 +156,28 @@
   ],
   "edges": [
     {
-      "id": "83e2",
+      "id": "9647",
       "source": "eadb",
       "sourceHandle": "a",
       "target": "cc6d",
-      "targetHandle": null
+      "targetHandle": null,
+      "parentId": "cdc8"
     },
     {
-      "id": "970a",
-      "source": "eadb",
-      "sourceHandle": "a",
-      "target": "cc6d",
-      "targetHandle": null
-    },
-    {
-      "id": "2bbc",
+      "id": "1a3d",
       "source": "eadb",
       "sourceHandle": "a",
       "target": "6360",
-      "targetHandle": null
+      "targetHandle": null,
+      "parentId": "cdc8"
     },
     {
-      "id": "3bfd",
-      "source": "eadb",
-      "sourceHandle": "a",
-      "target": "cc6d",
-      "targetHandle": null
-    },
-    {
-      "id": "df9b",
-      "source": "eadb",
-      "sourceHandle": "a",
-      "target": "6360",
-      "targetHandle": null
-    },
-    {
-      "id": "bf1a",
-      "source": "eadb",
-      "sourceHandle": "a",
-      "target": "cc6d",
-      "targetHandle": null
-    },
-    {
-      "id": "7edd",
-      "source": "cc6d",
-      "sourceHandle": "a",
-      "target": "a16f",
-      "targetHandle": null
-    },
-    {
-      "id": "7039",
+      "id": "9e6b",
       "source": "6360",
       "sourceHandle": "a",
       "target": "a16f",
-      "targetHandle": null
+      "targetHandle": null,
+      "parentId": "cdc8"
     }
   ]
 }
