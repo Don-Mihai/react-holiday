@@ -5,4 +5,8 @@
     left: 50%;
     transform: translateX(-50%);
   }
+
+  & &__input {
+    margin: 20px;
+  }
 }
