@@ -130,6 +130,19 @@
       },
       "dragging": false,
       "type": "customNode"
+    },
+    {
+      "id": "a16f",
+      "data": {
+        "title": "Новый шаг",
+        "description": "Описание нового шага",
+        "processId": "cdc8",
+        "completed": false
+      },
+      "position": {
+        "x": 0,
+        "y": 300
+      }
     }
   ],
   "edges": [
@@ -145,6 +158,48 @@
       "source": "eadb",
       "sourceHandle": "a",
       "target": "cc6d",
+      "targetHandle": null
+    },
+    {
+      "id": "2bbc",
+      "source": "eadb",
+      "sourceHandle": "a",
+      "target": "6360",
+      "targetHandle": null
+    },
+    {
+      "id": "3bfd",
+      "source": "eadb",
+      "sourceHandle": "a",
+      "target": "cc6d",
+      "targetHandle": null
+    },
+    {
+      "id": "df9b",
+      "source": "eadb",
+      "sourceHandle": "a",
+      "target": "6360",
+      "targetHandle": null
+    },
+    {
+      "id": "bf1a",
+      "source": "eadb",
+      "sourceHandle": "a",
+      "target": "cc6d",
+      "targetHandle": null
+    },
+    {
+      "id": "7edd",
+      "source": "cc6d",
+      "sourceHandle": "a",
+      "target": "a16f",
+      "targetHandle": null
+    },
+    {
+      "id": "7039",
+      "source": "6360",
+      "sourceHandle": "a",
+      "target": "a16f",
       "targetHandle": null
     }
   ]
