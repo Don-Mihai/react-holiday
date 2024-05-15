@@ -52,7 +52,7 @@ const DiagramFlow = ({ diagramNodes, diagramEdges = [], parentId, children, onCl
   };
 
   return (
-    <div style={{ height: 400 }}>
+    <div style={{ height: '100%' }}>
       <ReactFlow
         nodes={nodes.map((node) => ({
           ...node,

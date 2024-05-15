@@ -1,4 +1,8 @@
 .page-process {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
   &__header {
     padding: 10px;
     display: flex;
