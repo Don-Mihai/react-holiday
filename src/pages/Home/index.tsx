@@ -18,20 +18,10 @@ const Home = () => {
     setUser(user);
   };
 
-  const saveImg = (file: Blob) => {
-    const formData = new FormData();
-    formData.append('filedata', file as Blob);
-
-    axios.post('http://localhost:5000/upload', formData);
-  };
-
   return (
     <div>
       <Header />
       <h1>Home</h1>
-      <FileDrop borderRadius="0" onSendFiles={saveImg}>
-        <div style={{ padding: '20px', border: '1px solid red', width: '300px' }}>ЗАгружай изображения сюда</div>
-      </FileDrop>
 
       <h2>{user?.email}</h2>
     </div>

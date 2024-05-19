@@ -1,13 +1,15 @@
 import './FileDrop.scss';
 import React, { useRef, useState, MutableRefObject } from 'react';
+import cls from 'classnames';
 
 interface Props {
   children: any;
   borderRadius?: string;
+  fullWidth?: boolean;
   onSendFiles: (files: Blob) => void;
 }
 
-const FileDrop = ({ children, borderRadius, onSendFiles }: Props) => {
+const FileDrop = ({ children, borderRadius, fullWidth = false, onSendFiles }: Props) => {
   const [dragActive, setDragActive] = useState<boolean>(false);
   const inputRef: MutableRefObject<HTMLInputElement> = useRef({} as HTMLInputElement);
 
@@ -51,7 +53,7 @@ const FileDrop = ({ children, borderRadius, onSendFiles }: Props) => {
   };
 
   return (
-    <form className={'component-file-drop'} onMouseEnter={() => setDragActive(true)} onDragEnter={handleDrag}>
+    <form className={cls('component-file-drop', { fullwidth: fullWidth })} onMouseEnter={() => setDragActive(true)} onDragEnter={handleDrag}>
       {children}
       <input ref={inputRef} onChange={inputChangeHandler} type="file" className={'component-file-drop__input'} multiple={true} accept="image/*" />
       {dragActive && (
