@@ -155,6 +155,19 @@
       },
       "dragging": false,
       "type": "customNode"
+    },
+    {
+      "id": "7d2c",
+      "data": {
+        "title": "Новый шаг",
+        "description": "Описание нового шага",
+        "processId": "6c15",
+        "completed": false
+      },
+      "position": {
+        "x": 0,
+        "y": 600
+      }
     }
   ],
   "edges": [
