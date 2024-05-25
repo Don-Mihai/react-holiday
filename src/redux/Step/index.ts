@@ -12,7 +12,16 @@ const initialState: InitialState = {
 export const stepSlice = createSlice({
   name: 'step',
   initialState,
-  reducers: {},
+  reducers: {
+    setSteps(state, action: PayloadAction<Step[]>) {
+      state.steps = action.payload;
+    },
+    moveStep(state, action: PayloadAction<{ dragIndex: number; hoverIndex: number }>) {
+      const { dragIndex, hoverIndex } = action.payload;
+      const [draggedStep] = state.steps.splice(dragIndex, 1);
+      state.steps.splice(hoverIndex, 0, draggedStep);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(get.fulfilled, (state, action) => {
@@ -41,7 +50,7 @@ export const stepSlice = createSlice({
   },
 });
 
-export const {} = stepSlice.actions;
+export const { moveStep, setSteps } = stepSlice.actions;
 
 export default stepSlice.reducer;
 

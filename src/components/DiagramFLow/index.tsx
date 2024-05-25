@@ -13,8 +13,9 @@ interface Props {
   parentId?: string;
   children?: any;
   onClick?: (step: Step) => void;
+  onSaveNode?: (e: any, value: any) => void;
 }
-const DiagramFlow = ({ diagramNodes, diagramEdges = [], parentId, children, onClick }: Props) => {
+const DiagramFlow = ({ diagramNodes, diagramEdges = [], parentId, children, onClick, onSaveNode }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const nodes = useSelector((state: RootState) => state.Diagram.nodes);
@@ -66,6 +67,7 @@ const DiagramFlow = ({ diagramNodes, diagramEdges = [], parentId, children, onCl
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         fitView
+        onNodeDragStop={onSaveNode}
       >
         <Background />
       </ReactFlow>

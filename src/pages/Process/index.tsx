@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { PStepPost, emptyStep } from '../../redux/Step/types';
 import { AppDispatch, RootState } from '../../redux/store';
-import { get, post, remove } from '../../redux/Step';
+import { get, moveStep, post, remove } from '../../redux/Step';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Step from '../../components/Step';
 import Sidebar from '../../components/Sidebar';
@@ -21,6 +21,8 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import './style.scss';
 import DiagramFlow from '../../components/DiagramFLow';
 import { getEdges } from '../../redux/Diagram';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const Process = () => {
   const steps = useSelector((state: RootState) => state.Step.steps);
@@ -82,6 +84,10 @@ const Process = () => {
     dispatch(stepUpdate({ ...currentStep, data: { ...currentStep.data, ...innerValues } }));
   };
 
+  const handleSaveOnDrag = (e: any, step: IStep) => {
+    dispatch(stepUpdate(step));
+  };
+
   const handleChangeStep = (e: any) => {
     let value = e.target.value;
 
@@ -95,6 +101,10 @@ const Process = () => {
   const handleClick = useCallback((step: IStep) => {
     setCurrentStep(step);
   }, []);
+
+  const moveStepHandler = (dragIndex: number, hoverIndex: number) => {
+    dispatch(moveStep({ dragIndex, hoverIndex }));
+  };
 
   return (
     <div className="page-process">
@@ -126,9 +136,13 @@ const Process = () => {
       </Sidebar>
 
       {!mode ? (
-        steps.map((step) => <Step onClick={handleClick} onDelete={handleDelete} step={step} key={step.id} />)
+        <DndProvider backend={HTML5Backend}>
+          {steps.map((step, index) => (
+            <Step index={index} moveStep={moveStepHandler} onClick={handleClick} onDelete={handleDelete} step={step} key={step.id} />
+          ))}
+        </DndProvider>
       ) : (
-        <DiagramFlow diagramNodes={steps} diagramEdges={edges} parentId={params?.id} onClick={handleClick}></DiagramFlow>
+        <DiagramFlow diagramNodes={steps} diagramEdges={edges} parentId={params?.id} onClick={handleClick} onSaveNode={handleSaveOnDrag}></DiagramFlow>
       )}
 
       <Sidebar open={Boolean(currentStep?.id)} handleClose={handleClosetStep} handleSave={handleSaveStep}>
