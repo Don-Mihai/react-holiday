@@ -3,7 +3,7 @@ import Drawer from '@mui/material/Drawer';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ImageUploadIcon from '@mui/icons-material/CloudUpload';
 import './style.scss';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import FileDrop from '../FileDrop';
 import axios from 'axios';
@@ -15,9 +15,10 @@ interface Props {
   open: boolean;
   handleClose: () => void;
   children: React.ReactNode;
+  data?: any;
 }
 
-const Sidebar = ({ classNames, open, handleClose, handleSave, children }: Props) => {
+const Sidebar = ({ classNames, data, open, handleClose, handleSave, children }: Props) => {
   const [openUrl, setOpenUrl] = useState(false);
   const [formValues, setFormValues] = useState<any>({});
 
@@ -40,11 +41,11 @@ const Sidebar = ({ classNames, open, handleClose, handleSave, children }: Props)
 
   const saveImg = (file: Blob) => {
     const formData = new FormData();
-    formData.append('filedata', file);
+    formData.append('image', file);
     formData.append('userId', '0bdd');
 
     axios
-      .post(BASE_URL + 'upload', formData)
+      .post(BASE_URL + 'users/0bdd/upload', formData)
       .then((response) => {
         console.log('Image uploaded successfully:', response.data);
       })
@@ -52,6 +53,31 @@ const Sidebar = ({ classNames, open, handleClose, handleSave, children }: Props)
         console.error('Error uploading image:', error);
       });
   };
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleGenerateImage = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.post('http://localhost:5005/api/' + 'generate-image', { description: data?.description });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'generated_image.png');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (err) {
+      console.error('Error generating image:', err);
+      setError('Failed to generate image');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  console.log(formValues);
 
   return (
     <Drawer anchor={'right'} className="component-sidebar" open={open} onClose={onClose}>
@@ -63,7 +89,10 @@ const Sidebar = ({ classNames, open, handleClose, handleSave, children }: Props)
           </Button>
         </FileDrop>
 
-        {openUrl ? <TextField onChange={handleChange} name="imgUrl" value={formValues?.imgUrl} label="Путь к иконке" variant="outlined" /> : ''}
+        <Button onClick={handleGenerateImage} fullWidth variant="outlined" component="label" startIcon={<ImageUploadIcon />}>
+          {loading ? 'Генерация...' : 'Сгенерировать иконку'}
+        </Button>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
 
         <div className="component-sidebar__bottom-buttons">
           <Button variant="contained" component="label" onClick={onSave}>

@@ -145,7 +145,7 @@ const Process = () => {
         <DiagramFlow diagramNodes={steps} diagramEdges={edges} parentId={params?.id} onClick={handleClick} onSaveNode={handleSaveOnDrag}></DiagramFlow>
       )}
 
-      <Sidebar open={Boolean(currentStep?.id)} handleClose={handleClosetStep} handleSave={handleSaveStep}>
+      <Sidebar open={Boolean(currentStep?.id)} handleClose={handleClosetStep} handleSave={handleSaveStep} data={currentStep.data}>
         <TextField onChange={handleChangeStep} name="title" value={currentStep?.data?.title} label="Название" variant="outlined" />
         <TextField
           label="Описание"

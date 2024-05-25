@@ -5,6 +5,7 @@ import { User } from '../../redux/User/type';
 import Header from '../../components/Header';
 import { BASE_URL } from '../../utils';
 import FileDrop from '../../components/FileDrop';
+import ImageGenerator from './test';
 
 const Home = () => {
   const [user, setUser] = useState<null | User>(null);
@@ -24,6 +25,7 @@ const Home = () => {
       <h1>Home</h1>
 
       <h2>{user?.email}</h2>
+      <ImageGenerator />
     </div>
   );
 };
