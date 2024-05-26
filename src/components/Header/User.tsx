@@ -7,6 +7,10 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { SERVER_URL, getFullImageUrl } from '../../utils';
+import { getUserById } from '../../redux/User';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 const settings = [
   { title: 'Профиль', path: '/profile' },
@@ -30,11 +34,13 @@ const User = () => {
     navigate('/auth');
   };
 
+  const user = useSelector((state: RootState) => state.User.user);
+
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          <Avatar alt="Аватар" src={getFullImageUrl(SERVER_URL, user.imgUrl)} sx={{ width: 40, height: 40 }} />
         </IconButton>
       </Tooltip>
       <Menu
