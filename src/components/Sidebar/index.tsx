@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import FileDrop from '../FileDrop';
 import axios from 'axios';
-import { BASE_URL } from '../../utils';
+import { BASE_URL, SERVER_URL } from '../../utils';
 
 interface Props {
   handleSave?: (innerValues: any) => void;
@@ -41,11 +41,11 @@ const Sidebar = ({ classNames, data, open, handleClose, handleSave, children }: 
 
   const saveImg = (file: Blob) => {
     const formData = new FormData();
-    formData.append('image', file);
-    formData.append('userId', '0bdd');
+    formData.append('filedata', file);
+    formData.append('id', data?.id);
 
     axios
-      .post(BASE_URL + 'users/0bdd/upload', formData)
+      .post(SERVER_URL + 'step/upload-icon', formData)
       .then((response) => {
         console.log('Image uploaded successfully:', response.data);
       })
@@ -61,7 +61,7 @@ const Sidebar = ({ classNames, data, open, handleClose, handleSave, children }: 
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post('http://localhost:5005/api/' + 'generate-image', { description: data?.description });
+      const response = await axios.post('http://localhost:5002/api/' + 'generate-image', { description: data?.data.description });
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
@@ -77,7 +77,7 @@ const Sidebar = ({ classNames, data, open, handleClose, handleSave, children }: 
     }
   };
 
-  console.log(formValues);
+  console.log(formValues, data);
 
   return (
     <Drawer anchor={'right'} className="component-sidebar" open={open} onClose={onClose}>

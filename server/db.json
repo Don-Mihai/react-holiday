@@ -11,26 +11,7 @@
       "password": "00000000"
     }
   ],
-  "upload": [
-    {
-      "id": 1
-    },
-    {
-      "id": 2
-    },
-    {
-      "userId": "0bdd",
-      "id": 3
-    },
-    {
-      "userId": "0bdd",
-      "id": 4
-    },
-    {
-      "userId": "0bdd",
-      "id": 5
-    }
-  ],
+  "upload": [],
   "processes": [
     {
       "id": "6c15",
@@ -140,7 +121,7 @@
         "description": "создать папки для компонентов, страниц, стилей, утилит.",
         "processId": "6c15",
         "completed": false,
-        "imgUrl": "http://ddu208.minsk.edu.by/ru/sm_full.aspx?guid=20103"
+        "imgUrl": "1716706693506-avatar1359436305.jpg"
       },
       "position": {
         "x": -22.236729652489196,
