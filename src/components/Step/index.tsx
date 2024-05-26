@@ -6,6 +6,7 @@ import { useDrag, useDrop } from 'react-dnd';
 
 import './style.scss';
 import { Step as IStep } from '../../redux/Step/types';
+import { getFullImageUrl, SERVER_URL } from '../../utils';
 
 interface Props {
   step: IStep;
@@ -75,7 +76,7 @@ const Step = ({ step, index, onDelete, onClick, moveStep }: Props) => {
 
   return (
     <div className="step" onClick={handleClick} ref={ref} style={{ opacity: isDragging ? 0.5 : 1 }}>
-      <Avatar alt="Step" src={step.data.imgUrl} />
+      <Avatar alt="Step" src={getFullImageUrl(SERVER_URL, step.data.imgUrl)} />
       <h3 className="step__title">{step.data.title}</h3>
       <p className="step__description">{step.data.description}</p>
       <div className="step__actions">

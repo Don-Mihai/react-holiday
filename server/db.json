@@ -3,7 +3,8 @@
     {
       "id": "0bdd",
       "email": "admin@admin.ru",
-      "password": "00000000"
+      "password": "00000000",
+      "imgUrl": "1716719947878-avatar1359436305.jpg"
     },
     {
       "id": "1",
@@ -121,7 +122,7 @@
         "description": "создать папки для компонентов, страниц, стилей, утилит.",
         "processId": "6c15",
         "completed": false,
-        "imgUrl": "1716706693506-avatar1359436305.jpg"
+        "imgUrl": "1716716693653-avatar1359436305.jpg"
       },
       "position": {
         "x": -22.236729652489196,

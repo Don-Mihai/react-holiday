@@ -14,7 +14,5 @@ const storageConfig = multer.diskStorage({
 });
 
 router.route('/upload-avatar').post(multer({ storage: storageConfig }).single('filedata'), uploadAvatar);
-router.route('/reg').post(multer({ storage: storageConfig }).single('filedata'), uploadAvatar);
-router.route('/auth').post(multer({ storage: storageConfig }).single('filedata'), uploadAvatar);
 
 export default router;
