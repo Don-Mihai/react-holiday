@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import ReactFlow, { Background, NodeChange, EdgeChange, Connection } from 'react-flow-renderer';
+import 'react-flow-renderer/dist/style.css';
 import { Step } from '../../redux/Step/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
 import { addEdgeAsync, connect, setEdges, setNodes, updateEdges, updateNodes } from '../../redux/Diagram';
 import CustomNode from '../CustomNode';
+import CustomEdge from '../CustomEdge/CustomEdge';
 
 const nodeTypes = { customNode: CustomNode };
 interface Props {
@@ -65,6 +67,7 @@ const DiagramFlow = ({ diagramNodes, diagramEdges = [], parentId, children, onCl
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        connectionLineComponent={CustomEdge}
         nodeTypes={nodeTypes}
         fitView
         onNodeDragStop={onSaveNode}

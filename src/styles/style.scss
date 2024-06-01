@@ -1,3 +1,4 @@
+@import './varibles.scss';
 * {
   box-sizing: border-box;
 }
@@ -9,4 +10,8 @@ html {
 
 #root {
   height: 100%;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
 }

@@ -8,6 +8,7 @@ import FileDrop from '../../components/FileDrop';
 import axios from 'axios';
 import { getFullImageUrl, SERVER_URL } from '../../utils';
 import { getUserById } from '../../redux/User';
+import { setUser } from '../../redux/User';
 import { AppDispatch, RootState } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -43,7 +44,9 @@ const Profile = () => {
     formData.append('filedata', file);
     formData.append('id', userId);
 
-    axios.post(SERVER_URL + 'user/upload-avatar', formData);
+    const urlResp: string = (await axios.post(SERVER_URL + 'user/upload-avatar', formData)).data;
+    console.log(urlResp);
+    dispatch(setUser({ ...user, imgUrl: urlResp }));
   };
 
   return (

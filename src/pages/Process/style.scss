@@ -1,7 +1,14 @@
+$primary-color: #0070f3;
+
 .page-process {
   display: flex;
   flex-direction: column;
   height: 100%;
+
+  &__title {
+    font-size: 24px;
+    color: $primary-color;
+  }
 
   &__header {
     padding: 10px;

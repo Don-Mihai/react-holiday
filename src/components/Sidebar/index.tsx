@@ -61,7 +61,7 @@ const Sidebar = ({ classNames, data, open, handleClose, handleSave, children }: 
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post('http://localhost:5002/api/' + 'generate-image', { description: data?.data.description });
+      const response = await axios.post(SERVER_URL + 'step/generate-icon', { description: data?.data.description });
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;

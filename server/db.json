@@ -4,7 +4,7 @@
       "id": "0bdd",
       "email": "admin@admin.ru",
       "password": "00000000",
-      "imgUrl": "1716719947878-avatar1359436305.jpg"
+      "imgUrl": "1716723233397-c8cc24bba37a25c009647b8875aae0e3.jpg"
     },
     {
       "id": "1",
@@ -102,14 +102,14 @@
         "imgUrl": "https://i2.wp.com/miro.medium.com/0*adNE2bfyymxoEqLz.jpg"
       },
       "position": {
-        "x": 91.61581170662699,
-        "y": 406.6802979747319
+        "x": 88.53195258922015,
+        "y": 388.1771432702911
       },
       "selected": true,
       "type": "customNode",
       "positionAbsolute": {
-        "x": 91.61581170662699,
-        "y": 406.6802979747319
+        "x": 88.53195258922015,
+        "y": 388.1771432702911
       },
       "dragging": true
     },
@@ -162,7 +162,6 @@
     {
       "width": 100,
       "height": 100,
-      "id": "7d2c",
       "data": {
         "title": "Новый шаг",
         "description": "Описание нового шага",
@@ -170,13 +169,36 @@
         "completed": false
       },
       "position": {
-        "x": -264.63836468079876,
-        "y": 720.8131664847123
+        "x": -21.816351073191434,
+        "y": 902.8622854866571
       },
+      "id": "0pen1vw",
       "selected": true,
       "positionAbsolute": {
-        "x": -264.63836468079876,
-        "y": 720.8131664847123
+        "x": -21.816351073191434,
+        "y": 902.8622854866571
+      },
+      "dragging": true,
+      "type": "customNode"
+    },
+    {
+      "width": 100,
+      "height": 100,
+      "data": {
+        "title": "Новый шаг",
+        "description": "Описание нового шага",
+        "processId": "6c15",
+        "completed": false
+      },
+      "position": {
+        "x": 63.335716591779985,
+        "y": 1071.217672246266
+      },
+      "id": "AakSVd3",
+      "selected": true,
+      "positionAbsolute": {
+        "x": 63.335716591779985,
+        "y": 1071.217672246266
       },
       "dragging": true,
       "type": "customNode"
@@ -222,6 +244,46 @@
       "target": "5913",
       "targetHandle": null,
       "parentId": "6c15"
+    },
+    {
+      "source": "5913",
+      "sourceHandle": "a",
+      "target": "7d2c",
+      "targetHandle": null,
+      "parentId": "6c15",
+      "id": "r8fjjt1"
+    },
+    {
+      "source": "7d2c",
+      "sourceHandle": "a",
+      "target": "FW1MZO4",
+      "targetHandle": null,
+      "parentId": "6c15",
+      "id": "f5xQRoJ"
+    },
+    {
+      "source": "5913",
+      "sourceHandle": "blue",
+      "target": "0pen1vw",
+      "targetHandle": "red",
+      "parentId": "6c15",
+      "id": "GwzkS7E"
+    },
+    {
+      "source": "0pen1vw",
+      "sourceHandle": "blue",
+      "target": "AakSVd3",
+      "targetHandle": "red",
+      "parentId": "6c15",
+      "id": "jiqdaI9"
+    },
+    {
+      "source": "AakSVd3",
+      "sourceHandle": "blue",
+      "target": "1680",
+      "targetHandle": "red",
+      "parentId": "6c15",
+      "id": "ffbtqNt"
     }
   ]
 }
